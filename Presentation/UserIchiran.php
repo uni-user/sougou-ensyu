@@ -164,7 +164,7 @@ $rows  = $biz->searchWithLike($conditions, $likeCols, ['user_id ASC'], $size, $o
                                                 break;
                                             }
                                         }
-                                        echo h($r['store_id'] . '：' . $storeName);
+                                        echo h($storeName);
                                         ?>
                                     </td>
                                     <td>
