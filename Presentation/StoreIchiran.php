@@ -144,7 +144,7 @@ $rows  = $biz->searchWithLike($conditions, $likeCols, ['store_id ASC'], $size, $
                 <?php endif; ?>
             </div>
             <div class="button-group">
-                <button type="button" onclick="history.back()">戻る</button>
+                <button type="button" onclick="location.href='Menu.php'">戻る</button>
                 <button type="submit" name="action" value="new" onclick="document.getElementById('selectedStoreId').value=''">新規登録</button>
                 <button type="submit" name="action" value="edit" onclick="return checkSelection()">編集</button>
             </div>

@@ -186,7 +186,7 @@ $rows  = $biz->searchWithLike($conditions, $likeCols, ['user_id ASC'], $size, $o
             </div>
 
             <div class="button-group">
-                <button type="button" onclick="history.back()">戻る</button>
+                <button type="button" onclick="location.href='Menu.php'">戻る</button>
                 <button type="submit" name="action" value="new"
                     onclick="document.getElementById('selectedUserId').value=''">新規登録</button>
                 <button type="submit" name="action" value="edit" onclick="return checkSelection()">編集</button>
