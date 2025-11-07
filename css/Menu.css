@@ -1,40 +1,94 @@
+/* ===== 全体背景 ===== */
 body {
-    font-family: sans-serif;
-    background-color: #f0f4f8;
+    font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+    background-color: #FFE0E6; /* 淡いピンク */
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; /* 縦方向に積む */
+}
+
+/* ===== トップバー ===== */
+.topbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #FFD1DC; /* 少し濃いピンク */
+    border-bottom: 2px solid #FFB3C1;
+    box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.topbar .user-info {
+    font-weight: bold;
+    color: #333;
+}
+
+.topbar .logout button {
+    padding: 5px 12px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #333;
+    background-color: #F7E6AD;
+    cursor: pointer;
+}
+
+.topbar .logout button:hover {
+    background-color: #EDD18A;
+}
+
+/* ===== メインコンテンツ ===== */
+.menu-container {
+    flex: 1; /* 残りの高さを占有 */
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    flex-direction: column;
+    gap: 25px;
 }
-form {
-    background: white;
-    padding: 2em;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+
+/* ===== ボタングリッド ===== */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 250px); /* ボタン横幅を大きく */
+    gap: 80px; /* ボタン間隔を広げる */
+    justify-content: center;
 }
-input {
-    display: block;
-    width: 100%;
-    padding: 0.5em;
-    margin: 0.5em 0;
-    border: 1px solid #888;
-    border-radius: 4px;
-}
-button {
-    width: 100%;
-    padding: 0.7em;
-    font-size: 1em;
-    background-color: #0078d7;
-    color: white;
-    border: 2px solid #005ea2; /* ← 枠線を濃く */
-    border-radius: 4px;
+
+/* ===== ボタン ===== */
+.menu-button {
+    padding: 30px 0; /* ボタン縦幅を大きく */
+    font-size: 25px; /* フォントサイズアップ */
+    font-weight: bold;
+    color: #333;
+    background-color: #F7E6AD;
+    border: 2px solid #333;
+    border-radius: 10px; /* 少し丸みアップ */
     cursor: pointer;
-}
-button:hover {
-    background-color: #005ea2;
-}
-.error {
-    color: red;
-    margin-top: 0.5em;
+    transition: background-color 0.2s;
     text-align: center;
+}
+
+/* ホバー時 */
+.menu-button:hover {
+    background-color: #EDD18A;
+}
+
+/* ===== レスポンシブ ===== */
+@media (max-width: 800px) {
+    .menu-grid {
+        grid-template-columns: repeat(2, 180px); /* 狭い画面は2列 */
+        gap: 25px;
+    }
+}
+
+@media (max-width: 500px) {
+    .menu-grid {
+        grid-template-columns: 1fr; /* さらに狭い画面は1列 */
+        gap: 20px;
+    }
 }

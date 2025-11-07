@@ -1,5 +1,4 @@
 <?php
-// Menu.php
 session_start();
 
 // ログイン済みか確認
@@ -12,10 +11,13 @@ if (!isset($_SESSION['user'])) {
 $user = $_SESSION['user'];
 $userId     = (int)($user['user_id'] ?? 0);
 $userName   = $user['user_name'] ?? '';
-$department = $user['role'] === 'manager' ? '本部' :
-              ($user['role'] === 'admin' ? '管理者' : '一般');
+$role       = $user['role'] ?? ''; // 'manager', 'admin', 'user'
 
-// 未ログインまたは不正なセッションならログイン画面へ
+// 部署表示
+$department = $role === 'manager' ? '本部' :
+              ($role === 'admin' ? '管理者' : '一般');
+
+// 未ログインまたは不正セッションならログイン画面へ
 if ($userId === 0) {
     header('Location: Login.php');
     exit;
@@ -40,18 +42,20 @@ if ($userId === 0) {
   </form>
 </header>
 
-<main>
-  <h1 class="dept"><?= htmlspecialchars($department, ENT_QUOTES, 'UTF-8') ?> メニュー</h1>
+<main class="menu-container">
+  <div class="menu-grid">
+    <button class="menu-button" onclick="location.href='SalesIchiran.php'">売上一覧</button>
+    <button class="menu-button" onclick="location.href='Aggregate.php'">集計</button>
+    <button class="menu-button" onclick="location.href='RankingIchiran.php'">ランキング一覧</button>
+    <button class="menu-button" onclick="location.href='StoreIchiran.php'">店舗マスタ</button>
+    <button class="menu-button" onclick="location.href='ProductIchiran.php'">商品マスタ</button>
 
-  <section class="menu-grid">
-    <a class="card" href="SalesIchiran.php">売上一覧</a>
-    <a class="card" href="Aggregate.php">集計</a>
-    <a class="card" href="RankingIchiran.php">ランキング一覧</a>
-
-    <a class="card" href="StoreIchiran.php">店舗マスタ</a>
-    <a class="card" href="ProductIchiran.php">商品マスタ</a>
-    <a class="card" href="UserIchiran.php">ユーザーマスタ</a>
-  </section>
+    <?php if ($role === 'admin'): ?>
+      <button class="menu-button" onclick="location.href='UserIchiran.php'">ユーザーマスタ</button>
+    <?php endif; ?>
+  </div>
 </main>
+
+
 </body>
 </html>
