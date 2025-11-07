@@ -1,30 +1,64 @@
 <?php
-require_once 'LoginData.php';
+// /app/Business/LoginBusiness.php
 
-class LoginBusiness {
-    private $data;
+require_once __DIR__ . '/../DataAccess/LoginData.php';
 
-    public function __construct() {
-        $this->data = new LoginData();
+class LoginBusiness
+{
+    private LoginData $loginData;
+
+    public function __construct()
+    {
+        $this->loginData = new LoginData();
     }
 
-    public function login($username, $password) {
+    /**
+     * ログイン処理
+     * 
+     * @param string $userId
+     * @param string $password
+     * @return array|null ログイン成功時はユーザー情報、失敗時はnull
+     */
+    public function login(string $userId, string $password): ?array
+    {
         // 入力チェック
-        if (empty($username) || empty($password)) {
-            return false;
+        if ($userId === '' || $password === '') {
+            throw new Exception('ユーザーIDとパスワードを入力してください。');
         }
 
-        // DB照合
-        $user = $this->data->getUserByUsername($username);
-
-        if ($user && password_verify($password, $user['password'])) {
-            // ログイン成功
-            session_start();
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['username'];
-            return true;
+        // ユーザー情報取得
+        $user = $this->loginData->findUserById($userId);
+        if (!$user) {
+            throw new Exception('ユーザーが存在しません。');
         }
 
-        return false;
+        // パスワード認証（ハッシュ未使用バージョン）
+        if ($user['password'] !== $password) {
+            throw new Exception('パスワードが正しくありません。');
+        }
+
+        // ログイン成功時
+        return $user;
+    }
+
+    /**
+     * ハッシュ化されたパスワード対応バージョン（必要に応じて差し替え）
+     */
+    public function loginWithHash(string $userId, string $password): ?array
+    {
+        if ($userId === '' || $password === '') {
+            throw new Exception('ユーザーIDとパスワードを入力してください。');
+        }
+
+        $user = $this->loginData->findUserById($userId);
+        if (!$user) {
+            throw new Exception('ユーザーが存在しません。');
+        }
+
+        if (!password_verify($password, $user['password'])) {
+            throw new Exception('パスワードが正しくありません。');
+        }
+
+        return $user;
     }
 }
