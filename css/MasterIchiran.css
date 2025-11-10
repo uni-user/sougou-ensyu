@@ -106,7 +106,7 @@ form[action="StoreIchiran.php"] .form-section .search-actions button[type="submi
 form[action="ProductIchiran.php"] .form-section .search-actions button[type="submit"],
 form[action="UserIchiran.php"] .form-section .search-actions button[type="submit"] {
   padding: 10px 25px;
-  border: 2px solid #000;
+  border: none;
   border-radius: 5px;
   background-color: #f7e6ad;
   cursor: pointer;
@@ -177,7 +177,7 @@ tr.selected {
 .button-group button {
   padding: 10px 25px;
   border-radius: 5px;
-  border: 2px solid #000;
+  border: none;
   cursor: pointer;
   font-size: 16px;
 }

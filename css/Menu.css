@@ -1,11 +1,11 @@
 /* ===== 全体背景 ===== */
 body {
     font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
-    background-color: #FFE0E6; /* 淡いピンク */
+    background-color: #FFE0E6;
     margin: 0;
     min-height: 100vh;
     display: flex;
-    flex-direction: column; /* 縦方向に積む */
+    flex-direction: column; 
 }
 
 /* ===== トップバー ===== */
@@ -15,7 +15,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: #FFD1DC; /* 少し濃いピンク */
+    background-color: #FFD1DC;
     border-bottom: 2px solid #FFB3C1;
     box-sizing: border-box;
     position: sticky;
@@ -29,7 +29,7 @@ body {
 }
 
 .topbar .logout button {
-    padding: 5px 12px;
+    padding: 8px 12px;
     font-size: 14px;
     border-radius: 6px;
     border: 1px solid #333;
@@ -43,7 +43,7 @@ body {
 
 /* ===== メインコンテンツ ===== */
 .menu-container {
-    flex: 1; /* 残りの高さを占有 */
+    flex: 1; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -54,20 +54,20 @@ body {
 /* ===== ボタングリッド ===== */
 .menu-grid {
     display: grid;
-    grid-template-columns: repeat(3, 250px); /* ボタン横幅を大きく */
-    gap: 80px; /* ボタン間隔を広げる */
+    grid-template-columns: repeat(3, 250px);
+    gap: 80px; 
     justify-content: center;
 }
 
 /* ===== ボタン ===== */
 .menu-button {
-    padding: 30px 0; /* ボタン縦幅を大きく */
-    font-size: 25px; /* フォントサイズアップ */
+    padding: 30px 0; 
+    font-size: 25px; 
     font-weight: bold;
     color: #333;
     background-color: #F7E6AD;
-    border: 2px solid #333;
-    border-radius: 10px; /* 少し丸みアップ */
+    border: none;
+    border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.2s;
     text-align: center;
@@ -81,14 +81,14 @@ body {
 /* ===== レスポンシブ ===== */
 @media (max-width: 800px) {
     .menu-grid {
-        grid-template-columns: repeat(2, 180px); /* 狭い画面は2列 */
+        grid-template-columns: repeat(2, 180px);
         gap: 25px;
     }
 }
 
 @media (max-width: 500px) {
     .menu-grid {
-        grid-template-columns: 1fr; /* さらに狭い画面は1列 */
+        grid-template-columns: 1fr; 
         gap: 20px;
     }
 }
