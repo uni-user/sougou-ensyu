@@ -49,8 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1>ログイン</h1>
 
         <form method="post" class="login-form">
-            <input type="text" name="user_id" placeholder="ユーザーID" required>
-            <input type="password" name="password" placeholder="パスワード" required>
+            <input type="text" name="user_id" placeholder="ユーザーID(半角英数字)" required>
+            <input type="password" name="password" placeholder="パスワード(半角英数字、記号)" required>
             <button type="submit" class="login-button">ログイン</button>
 
             <?php if ($error): ?>
