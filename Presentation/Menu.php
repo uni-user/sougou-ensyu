@@ -44,8 +44,8 @@ if ($userId === 0) {
 
 <main class="menu-container">
   <div class="menu-grid">
-    <button class="menu-button" onclick="location.href='SalesIchiran.php'">売上一覧</button>
-    <button class="menu-button" onclick="location.href='Aggregate.php'">集計</button>
+    <button class="menu-button" onclick="location.href='UriageIchiran.php'">売上一覧</button>
+    <button class="menu-button" onclick="location.href='Syukei.php'">集計</button>
     <button class="menu-button" onclick="location.href='RankingIchiran.php'">ランキング一覧</button>
     <button class="menu-button" onclick="location.href='StoreIchiran.php'">店舗マスタ</button>
     <button class="menu-button" onclick="location.href='ProductIchiran.php'">商品マスタ</button>
