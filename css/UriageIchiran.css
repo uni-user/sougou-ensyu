@@ -185,3 +185,19 @@ tr.selected {
   padding: 20px;
   color: #777;
 }
+
+/* ===============================
+   売上一覧専用：期間入力（開始～終了）
+   =============================== */
+.form-section .horizontal-group input[type="date"] {
+  width: 40%;
+}
+
+.form-section .horizontal-group span {
+  display: inline-block;
+  width: 20px;
+  text-align: center;
+  color: #555;
+  font-weight: bold;
+}
+

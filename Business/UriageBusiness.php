@@ -1,6 +1,4 @@
 <?php
-// /app/Business/UriageBusiness.php
-
 require_once __DIR__ . '/../DataAccess/UriageData.php';
 
 class UriageBusiness
@@ -17,13 +15,18 @@ class UriageBusiness
         return $this->data->countByConditions($conditions, $likeCols);
     }
 
-    public function searchWithLike(
-        array $conditions,
-        array $likeCols = [],
-        array $orderBy = ['s.date DESC'],
-        int $limit = 20,
-        int $offset = 0
-    ): array {
+    public function searchWithLike(array $conditions, array $likeCols = [], array $orderBy = ['s.date DESC'], int $limit = 20, int $offset = 0): array
+    {
         return $this->data->searchWithLike($conditions, $likeCols, $orderBy, $limit, $offset);
+    }
+
+    public function getAllStores(): array
+    {
+        return $this->data->getAllStores();
+    }
+
+    public function getAllPaymentMethods(): array
+    {
+        return $this->data->getAllPaymentMethods();
     }
 }

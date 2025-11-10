@@ -9,25 +9,31 @@ function h($v)
 $biz = new UriageBusiness();
 
 // 検索フォーム入力
-$storeName = trim($_GET['store_name'] ?? '');
-$dateFrom  = trim($_GET['date_from'] ?? '');
-$dateTo    = trim($_GET['date_to'] ?? '');
-$payment   = trim($_GET['payment_method'] ?? '');
-$page      = max(1, (int)($_GET['page'] ?? 1));
-$size      = 20;
+$dateFrom    = trim($_GET['date_from'] ?? '');
+$dateTo      = trim($_GET['date_to'] ?? '');
+$storeId     = trim($_GET['store_id'] ?? '');
+$productName = trim($_GET['product_name'] ?? '');
+$payment     = trim($_GET['payment_method'] ?? '');
 
+// ページング
+$page = max(1, (int)($_GET['page'] ?? 1));
+$size = 20;
+$offset = ($page - 1) * $size;
+
+// 条件配列
 $conditions = [];
-if ($storeName !== '') $conditions['st.store_name'] = $storeName;
-if ($payment !== '')   $conditions['s.payment_method'] = $payment;
-if ($dateFrom !== '')  $conditions['s.date >='] = $dateFrom;
-if ($dateTo !== '')    $conditions['s.date <='] = $dateTo;
+if ($storeId !== '')    $conditions['st.store_id']    = $storeId;
+if ($payment !== '')    $conditions['s.payment_method'] = $payment;
+if ($dateFrom !== '')   $conditions['s.date >=']      = $dateFrom;
+if ($dateTo !== '')     $conditions['s.date <=']      = $dateTo;
 
-$likeCols = ['st.store_name', 's.payment_method'];
-$offset   = ($page - 1) * $size;
-
-// データ取得
+$likeCols = ['p.product_name'];
 $total = $biz->countByConditions($conditions, $likeCols);
 $rows  = $biz->searchWithLike($conditions, $likeCols, ['s.date DESC'], $size, $offset);
+
+// 店舗と支払方法の配列（例）
+$stores = $biz->getAllStores(); // store_id, store_name
+$paymentMethods = ['現金', 'クレジット', 'QRコード'];
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -44,19 +50,45 @@ $rows  = $biz->searchWithLike($conditions, $likeCols, ['s.date DESC'], $size, $o
 
         <form action="UriageIchiran.php" method="get">
             <div class="form-section">
-                <label for="store_name">店舗名</label>
-                <input type="text" id="store_name" name="store_name" value="<?= h($storeName) ?>">
 
+                <!-- 期間 -->
+                <label for="date_from">期間</label>
+                <div class="horizontal-group">
+                    <input type="date" id="date_from" name="date_from" value="<?= h($dateFrom) ?>">
+                    <span>～</span>
+                    <input type="date" id="date_to" name="date_to" value="<?= h($dateTo) ?>">
+                </div>
+
+                <!-- 店舗名プルダウン -->
+                <label for="store_id">店舗名</label>
+                <select id="store_id" name="store_id">
+                    <option value="">選択してください</option>
+                    <?php foreach ($stores as $s): ?>
+                        <option value="<?= h($s['store_id']) ?>" <?= ($storeId == $s['store_id']) ? 'selected' : '' ?>>
+                            <?= h($s['store_id']) ?>：<?= h($s['store_name']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+
+                <!-- 商品名テキスト -->
+                <label for="product_name">商品名</label>
+                <input type="text" id="product_name" name="product_name" value="<?= h($productName) ?>">
+
+                <!-- 支払方法プルダウン -->
                 <label for="payment_method">支払方法</label>
-                <input type="text" id="payment_method" name="payment_method" value="<?= h($payment) ?>">
+                <select id="payment_method" name="payment_method">
+                    <option value="">選択してください</option>
+                    <?php foreach ($paymentMethods as $pm): ?>
+                        <option value="<?= h($pm) ?>" <?= ($payment == $pm) ? 'selected' : '' ?>>
+                            <?= h($pm) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
 
-                <label for="date_from">日付（開始）</label>
-                <input type="date" id="date_from" name="date_from" value="<?= h($dateFrom) ?>">
-
-                <label for="date_to">日付（終了）</label>
-                <input type="date" id="date_to" name="date_to" value="<?= h($dateTo) ?>">
-
-                <button type="submit">検索</button>
+                <!-- 検索ボタン -->
+                <div class="search-actions">
+                    <button type="submit">検索</button>
+                </div>
             </div>
         </form>
 
@@ -84,8 +116,8 @@ $rows  = $biz->searchWithLike($conditions, $likeCols, ['s.date DESC'], $size, $o
                                 <td><?= h($r['register_no']) ?></td>
                                 <td><?= h($r['product_name']) ?></td>
                                 <td><?= h($r['quantity']) ?></td>
-                                <td><?= number_format((float)$r['amount']) ?>円</td>
-                                <td><?= h($r['payment_method']) ?></td>
+                                <td style="text-align:right;"><?= number_format((float)$r['amount']) ?>円</td>
+                                <td style="text-align:center;"><?= h($r['payment_method']) ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
