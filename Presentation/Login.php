@@ -13,18 +13,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $user = $biz->login($user_id, $password);
 
-        if ($user) {
+        if (!$user) {
+            // ユーザーが存在しない、パスワードが間違っている
+            $error = "ユーザーIDまたはパスワードが正しくありません。";
+        } elseif ($user['role'] === 'staff') {
+            // 権限チェック：staffはログイン不可
+            $error = "このアカウントではログインできません。";
+        } else {
+            // ログイン成功
             $_SESSION['user'] = $user;
             header('Location: Menu.php');
             exit;
-        } else {
-            // 認証失敗時のメッセージ
-            $error = "ユーザーIDまたはパスワードが正しくありません。";
         }
-
     } catch (PDOException $e) {
         error_log("Login error: " . $e->getMessage());
-
         $error = "ログイン処理中に問題が発生しました。入力内容をご確認ください。";
     } catch (Exception $e) {
         error_log("General login error: " . $e->getMessage());
@@ -34,12 +36,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ログイン</title>
-<link rel="stylesheet" href="../css/Login.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログイン</title>
+    <link rel="stylesheet" href="../css/Login.css">
 </head>
+
 <body>
     <div class="container">
         <h1>ログイン</h1>
@@ -58,4 +62,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </div>
 </body>
+
 </html>
