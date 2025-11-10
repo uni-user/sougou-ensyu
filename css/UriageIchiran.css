@@ -41,6 +41,7 @@ form[action="UriageIchiran.php"] .form-section {
   column-gap: 16px;
   row-gap: 12px;
   align-items: center;
+  justify-content: center;
 }
 
 .form-section label {
@@ -61,17 +62,25 @@ form[action="UriageIchiran.php"] .form-section {
   box-sizing: border-box;
 }
 
-/* 横並び用（店舗名＋支払方法など） */
-.form-section .horizontal-group {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+/* ===============================
+   売上一覧専用：期間入力（開始～終了）
+   =============================== */
+.form-section .horizontal-group input[type="date"] {
+  width: 28%;
+}
+
+.form-section .horizontal-group span {
+  display: inline-block;
+  width: 20px;
+  text-align: center;
+  color: #555;
+  font-weight: bold;
 }
 
 /* 検索ボタン位置調整 */
 form[action="UriageIchiran.php"] .form-section .search-actions {
   grid-column: 2;
-  justify-self: end;
+  justify-self: center;
   margin-right: 70px;
 }
 
@@ -83,6 +92,13 @@ form[action="UriageIchiran.php"] .form-section .search-actions {
 }
 
 /* 検索ボタン */
+form[action="UriageIchiran.php"] .form-section .search-actions {
+  grid-column: 1 / -1;  
+  justify-self: center;  
+  margin-right: 0;
+}
+
+
 form[action="UriageIchiran.php"] .form-section .search-actions button[type="submit"] {
   padding: 10px 25px;
   border: none;
@@ -95,6 +111,7 @@ form[action="UriageIchiran.php"] .form-section .search-actions button[type="subm
 form[action="UriageIchiran.php"] .form-section .search-actions button[type="submit"]:hover {
   background-color: #9bbfff;
 }
+
 
 /* ===============================
    結果エリア
@@ -186,18 +203,5 @@ tr.selected {
   color: #777;
 }
 
-/* ===============================
-   売上一覧専用：期間入力（開始～終了）
-   =============================== */
-.form-section .horizontal-group input[type="date"] {
-  width: 40%;
-}
 
-.form-section .horizontal-group span {
-  display: inline-block;
-  width: 20px;
-  text-align: center;
-  color: #555;
-  font-weight: bold;
-}
 
