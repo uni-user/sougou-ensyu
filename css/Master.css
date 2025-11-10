@@ -13,7 +13,7 @@ body {
 
 /* ===== コンテナ全体 ===== */
 .container {
-    width: 450px;
+    width: 500px;
     max-width: 95%;
     padding: 40px 60px;
     background-color: #FFE0E6;
@@ -48,7 +48,7 @@ form {
 .form-section {
     display: grid;
     grid-template-columns: 140px 1fr; /* ラベル列 + 入力列 */
-    gap: 20px 22px;
+    gap: 25px 27px;
     align-items: center;
     justify-content: flex-start;
     width: 100%;
@@ -59,7 +59,7 @@ form {
 .form-section label {
     font-weight: bold;
     color: #555;
-    text-align: left;
+    text-align: right;
     white-space: nowrap;
 }
 
@@ -108,7 +108,7 @@ form {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 28px;
+    gap: 40px;
     margin-top: 30px;
     width: 100%;
 }
