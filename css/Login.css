@@ -1,0 +1,109 @@
+/* ===== ベース設定 ===== */
+body {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+    background-color: #F0F0F0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* ===== コンテナ全体 ===== */
+.container {
+    width: 450px;
+    max-width: 95%;
+    padding: 60px;
+    background-color: #FFE0E6;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* ===== タイトル ===== */
+h1 {
+    font-size: 26px;
+    color: #333;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #FFB3C1;
+    padding-bottom: 10px;
+}
+
+/* ===== フォーム全体 ===== */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;               
+    align-items: stretch;
+}
+
+/* ===== 入力欄 ===== */
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    width: 350px;
+    padding: 12px 14px;
+    align-self: center;
+    margin-top: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+}
+
+.login-form input:focus {
+    border-color: #FFB3C1;
+    box-shadow: 0 0 3px rgba(255, 179, 193, 0.6);
+}
+
+/* ===== ログインボタン ===== */
+.login-button {
+    width: 150px;
+    align-self: center;
+    padding: 15px;
+    margin-top: 20px;
+    background-color: #F7E6AD;
+    border: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-button:hover {
+    background-color: #EDD18A;
+}
+
+/* ===== エラーメッセージ ===== */
+.error-box {
+    background-color: #FFE6E6;  
+    border: 2px solid #FF4D4D;          
+    color: #B30000;                     
+    border-radius: 6px;
+    padding: 10px 15px;
+    margin-top: 15px;
+    font-size: 15px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    animation: fadeIn 0.4s ease;
+}
+
+/* アイコン */
+.error-icon {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+/* ふわっと表示アニメーション */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+

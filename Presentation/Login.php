@@ -1,5 +1,4 @@
 <?php
-// /app/Presentation/Login.php
 require_once __DIR__ . '/../Business/LoginBusiness.php';
 session_start();
 
@@ -10,15 +9,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = trim($_POST['password'] ?? '');
 
     $biz = new LoginBusiness();
-    $user = $biz->login($user_id, $password);
 
-    if ($user) {
-        // ログイン成功 → セッションにユーザー情報を保存
-        $_SESSION['user'] = $user;
-        header('Location: Menu.php');
-        exit;
-    } else {
-        $error = "ユーザー名またはパスワードが違います。";
+    try {
+        $user = $biz->login($user_id, $password);
+
+        if ($user) {
+            $_SESSION['user'] = $user;
+            header('Location: Menu.php');
+            exit;
+        } else {
+            // 認証失敗時のメッセージ
+            $error = "ユーザーIDまたはパスワードが正しくありません。";
+        }
+
+    } catch (PDOException $e) {
+        error_log("Login error: " . $e->getMessage());
+
+        $error = "ログイン処理中に問題が発生しました。入力内容をご確認ください。";
+    } catch (Exception $e) {
+        error_log("General login error: " . $e->getMessage());
+        $error = "予期しないエラーが発生しました。もう一度お試しください。";
     }
 }
 ?>
@@ -31,16 +41,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <link rel="stylesheet" href="../css/Login.css">
 </head>
 <body>
+    <div class="container">
+        <h1>ログイン</h1>
 
-<form method="post">
-    <h2>ログイン</h2>
-    <input type="text" name="user_id" placeholder="ユーザーID" required>
-    <input type="password" name="password" placeholder="パスワード" required>
-    <button type="submit">ログイン</button>
-    <?php if ($error): ?>
-        <p class="error"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></p>
-    <?php endif; ?>
-</form>
+        <form method="post" class="login-form">
+            <input type="text" name="user_id" placeholder="ユーザーID" required>
+            <input type="password" name="password" placeholder="パスワード" required>
+            <button type="submit" class="login-button">ログイン</button>
 
+            <?php if ($error): ?>
+                <div class="error-box">
+                    <span class="error-icon">⚠️</span>
+                    <?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?>
+                </div>
+            <?php endif; ?>
+        </form>
+    </div>
 </body>
 </html>
