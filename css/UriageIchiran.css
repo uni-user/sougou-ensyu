@@ -1,0 +1,187 @@
+/* ===============================
+   基本設定
+   =============================== */
+body {
+  font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+  background-color: #f4f8ff;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 1000px;
+  max-width: 95%;
+  padding: 25px 30px;
+  background-color: #e9f2ff;
+  border: 1px solid #c9d8f2;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 26px;
+  color: #333;
+  margin-bottom: 25px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #8bb3ff;
+  text-align: center;
+}
+
+/* ===============================
+   検索フォーム
+   =============================== */
+form[action="UriageIchiran.php"] .form-section {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  column-gap: 16px;
+  row-gap: 12px;
+  align-items: center;
+}
+
+.form-section label {
+  font-weight: bold;
+  text-align: right;
+  white-space: nowrap;
+  color: #555;
+}
+
+.form-section input[type="text"],
+.form-section input[type="date"],
+.form-section select {
+  width: 60%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+/* 横並び用（店舗名＋支払方法など） */
+.form-section .horizontal-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* 検索ボタン位置調整 */
+form[action="UriageIchiran.php"] .form-section .search-actions {
+  grid-column: 2;
+  justify-self: end;
+  margin-right: 70px;
+}
+
+.form-section .input-with-button {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 検索ボタン */
+form[action="UriageIchiran.php"] .form-section .search-actions button[type="submit"] {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 5px;
+  background-color: #b9d3ff;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+form[action="UriageIchiran.php"] .form-section .search-actions button[type="submit"]:hover {
+  background-color: #9bbfff;
+}
+
+/* ===============================
+   結果エリア
+   =============================== */
+.result-area {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.result-table th,
+.result-table td {
+  border: 1px solid #eee;
+  padding: 8px;
+  text-align: center;
+}
+
+.result-table th {
+  background-color: #e2e9f7;
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.result-table td {
+  white-space: nowrap;
+}
+
+/* 数値系カラム右寄せ */
+.result-table td:nth-child(6) {
+  text-align: right;
+}
+
+/* 行ホバー効果 */
+tr.selectable:hover {
+  background-color: #eef;
+  cursor: pointer;
+}
+
+tr.selected {
+  background-color: #cce;
+}
+
+/* ===============================
+   ボタングループ
+   =============================== */
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 250px;
+  margin-top: 10px;
+}
+
+.button-group button {
+  padding: 10px 25px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.button-group button[type="button"] {
+  background-color: #a9a9a9;
+  color: #fff;
+}
+
+.button-group button[type="button"]:hover {
+  background-color: #999;
+}
+
+/* ===============================
+   メッセージ
+   =============================== */
+.no-data {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+}
