@@ -11,7 +11,7 @@ if (!isset($_SESSION['user'])) {
 $user = $_SESSION['user'];
 $userId     = (int)($user['user_id'] ?? 0);
 $userName   = $user['user_name'] ?? '';
-$role       = $user['role'] ?? ''; // 'manager', 'admin', 'user'
+$role       = $user['role'] ?? '';
 
 // 部署表示
 $department = $role === 'manager' ? '本部' :
