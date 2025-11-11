@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $biz->login($user_id, $password);
 
         if (!$user) {
-            // ユーザーが存在しない、パスワードが間違っている
+            // ユーザーが存在しない、パスワードが間違ってる
             $error = "ユーザーIDまたはパスワードが正しくありません。";
         } elseif ($user['role'] === 'staff') {
             // 権限チェック：staffはログイン不可
