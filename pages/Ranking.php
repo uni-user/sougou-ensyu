@@ -26,7 +26,7 @@ $stores = [
 
 $errors = [];
 $rows   = [];
-$title  = '売上集計'; // デフォルトタイトル
+$title  = '売上集計';
 
 // Fキー処理
 $f = isset($_GET['f']) ? $_GET['f'] : '';
