@@ -44,14 +44,15 @@ if ($userId === 0) {
 
 <main class="menu-container">
   <div class="menu-grid">
-    <button class="menu-button" onclick="location.href='UriageIchiran.php'">売上一覧</button>
-    <button class="menu-button" onclick="location.href='Syukei.php'">集計</button>
     <button class="menu-button" onclick="location.href='StoreIchiran.php'">店舗マスタ</button>
     <button class="menu-button" onclick="location.href='ProductIchiran.php'">商品マスタ</button>
 
     <?php if ($role === 'admin'): ?>
       <button class="menu-button" onclick="location.href='UserIchiran.php'">ユーザーマスタ</button>
     <?php endif; ?>
+
+    <button class="menu-button" onclick="location.href='UriageIchiran.php'">売上一覧</button>
+    <button class="menu-button" onclick="location.href='Syukei.php'">集計</button>
   </div>
 </main>
 
