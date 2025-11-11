@@ -1,5 +1,5 @@
 <?php
-// /app/pages/Ranking.php
+// /app/pages/Syukei.php
 declare(strict_types=1);
 
 require_once __DIR__ . '/../DataAccess/SyukeiData.php';
