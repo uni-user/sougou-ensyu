@@ -148,12 +148,12 @@ form[action="UriageIchiran.php"] .form-section .search-actions button[type="subm
 
 /* 行ホバー効果 */
 tr.selectable:hover {
-  background-color: #fff0f5;
+  background-color: #eef;
   cursor: pointer;
 }
 
 tr.selected {
-  background-color: #ffd6dc;
+  background-color: #cce;
 }
 
 /* ===============================
