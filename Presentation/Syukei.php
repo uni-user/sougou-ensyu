@@ -2,11 +2,11 @@
 // /app/pages/Ranking.php
 declare(strict_types=1);
 
-require_once __DIR__ . '/../DataAccess/RankingData.php';
-require_once __DIR__ . '/../Business/RankingBusiness.php';
+require_once __DIR__ . '/../DataAccess/SyukeiData.php';
+require_once __DIR__ . '/../Business/SyukeiBusiness.php';
 
-$data = new RankingData();
-$biz  = new RankingBusiness($data);
+$data = new SyukeiData();
+$biz  = new SyukeiBusiness($data);
 
 // --------------------------------------------------------
 // GETパラメータからランキングタイプを取得。デフォルトは「商品別」

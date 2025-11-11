@@ -1,34 +1,41 @@
 <?php
-// /app/Business/RankingBusiness.php
 declare(strict_types=1);
 
-class RankingBusiness {
-    private RankingData $data;
+require_once __DIR__ . '/../DataAccess/SyukeiData.php';
 
-    public function __construct(RankingData $data) {
+class SyukeiBusiness {
+    private SyukeiData $data;
+
+    public function __construct(SyukeiData $data) {
         $this->data = $data;
     }
 
-    // 入力日付の検証とランキング取得
-    public function getRanking(string $startDate, string $endDate): array {
-        $errors = [];
-        if (!$this->isValidDate($startDate)) {
-            $errors[] = '開始日は YYYY-MM-DD 形式で入力してください。';
-        }
-        if (!$this->isValidDate($endDate)) {
-            $errors[] = '終了日は YYYY-MM-DD 形式で入力してください。';
-        }
-        if ($errors) {
-            return ['errors' => $errors, 'rows' => []];
-        }
-        $start = $startDate . ' 00:00:00';
-        $end   = $endDate   . ' 23:59:59';
-        $rows  = $this->data->fetchRanking($start, $end);
-        return ['errors' => [], 'rows' => $rows];
-    }
+    /**
+     * 指定されたランキングタイプに基づいてデータを取得します。
+     * @param string $rankingType ランキングの種類 ('store', 'product', 'date')
+     * @return array 取得したデータ配列とランキングタイプ
+     */
+    public function getRanking(string $rankingType): array {
+        $rows = [];
+        $actualRankingType = $rankingType; // 実際に処理したランキングタイプを保持
 
-    private function isValidDate(string $d): bool {
-        $dt = DateTime::createFromFormat('Y-m-d', $d);
-        return $dt && $dt->format('Y-m-d') === $d;
+        switch ($rankingType) {
+            case 'store':
+                $rows = $this->data->fetchStoreRanking();
+                break;
+            case 'product':
+                $rows = $this->data->fetchProductRanking();
+                break;
+            case 'date':
+                $rows = $this->data->fetchDateRanking();
+                break;
+            default:
+                // 未知のタイプが指定された場合、デフォルトで商品別ランキングを表示
+                $rows = $this->data->fetchProductRanking();
+                $actualRankingType = 'product';
+                break;
+        }
+        // errorsは今回のケースでは発生しないが、Ranking.phpとの整合性のため空配列を返却
+        return ['errors' => [], 'rows' => $rows, 'ranking_type' => $actualRankingType];
     }
 }
