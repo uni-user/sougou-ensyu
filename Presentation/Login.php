@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // 権限チェック：staffはログイン不可
             $error = "このアカウントではログインできません。";
         } else {
-            // ログイン成功
+            
             $_SESSION['user'] = $user;
             header('Location: Menu.php');
             exit;
