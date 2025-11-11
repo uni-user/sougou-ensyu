@@ -14,7 +14,7 @@ $table = 'stores';
 $pk = 'store_id';
 $biz = new MasterBusiness($table, $pk);
 
-// GET/POSTどちらからも store_id を取得
+// GET/POST　どちらからも store_id を取得
 $storeId = trim($_GET[$pk] ?? '');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $storeId = trim($_POST[$pk] ?? $storeId);
