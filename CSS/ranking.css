@@ -1,0 +1,135 @@
+
+h2 {
+    font-size: 26px;
+    color: #333;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ffb3c1;
+    text-align: left; /* タイトル中央寄せ */
+}
+
+body { 
+    font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* 上部に寄せる */
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.container { 
+    width: 900px;
+    max-width: 95%;
+    padding: 25px 30px; /* 少し大きめのパディング */
+    background-color: #ffe0e6; /* ピンク色 */
+    border-radius: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+.box { 
+    background:#fff; padding:10px; border:1px solid #ccc; min-height:350px;
+}
+.box th, .box td{
+    border: 1px solid #eee;
+    padding: 8px;
+    text-align: center;
+}
+.box th {
+    background-color: #e6e6e6;
+}
+.controls { 
+    display:flex; gap:10px; align-items:center; margin-bottom:10px; 
+    padding: 10px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+#btnSearch {
+    background-color: #f0e68c; /*検索ボタンの色*/
+    border: 1px solid #d4c77d;
+    color: #333;
+}
+#btnSearch:hover {
+    background-color: #f0db66;
+}
+input[type=date] { 
+    padding:6px; 
+}
+button { 
+    padding:8px 16px; 
+}
+table { 
+    width:100%; border-collapse: collapse; margin-top:10px; 
+}
+th, td { 
+    border-bottom:1px solid #ddd; padding:8px; text-align:left; 
+}
+th { 
+    font-weight:bold; 
+}
+.footer { 
+    display:grid; grid-template-columns: repeat(12, 1fr); gap:8px; margin-top:20px; 
+}
+.footer buttons { 
+    width:100%; padding:12px 0; 
+}
+.back { 
+    text-align:right; 
+    margin-top:16px; 
+    padding-left: 600px;
+}
+ #f2Form button, #f9Form button {
+    background-color: #f0e68c; /*Functionボタンの色*/
+    border-radius: 1px solid #d4c77d;
+    color: #333;
+}
+#f2Form button:hover,
+#f9Form button:hover {
+  background-color: #f0db66;
+}
+
+
+.ranking-type-buttons {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start; /* 左寄せ */
+}
+.ranking-type-button button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    min-width: 120px; /* ボタンの幅を揃える */
+}
+.ranking-type-buttons button.active {
+    background-color: #007bff; /* ボタンの背景色 */
+    color: white;              /* ボタンの文字色 */
+    border-color: #007bff;
+}
+
+/* フッターボタンのスタイル調整 */
+.footer {
+    display: flex;
+    justify-content: flex-start; /* Fキーボタンを左寄せ */
+    gap: 10px;
+    padding-top: 20px;
+    margin-top: 20px; /* テーブルとの間隔 */
+    border-top: 1px solid #eee; /* 上部に区切り線 */
+}
+.footer button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    min-width: 80px; /* ファンクションキーの幅を揃える */
+}

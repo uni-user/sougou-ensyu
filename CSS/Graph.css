@@ -1,0 +1,63 @@
+/* グラフ画面のCSS */
+        body {
+            font-family: 'Hiragino [name] Gothic ProN', 'Meiryo', sans-serif;
+            background-color: #f0f0f0;
+            display: flex; justify-content: center; align-items: flex-start;
+            min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box;
+        }
+        .container {
+            width: 1000px; max-width: 96%;
+            padding: 20px 24px; background: #fff;
+            border: 1px solid #ddd; border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 { font-size: 24px; margin: 0 0 16px; }
+        .condition-summary {
+            background: #fff7cc; border: 1px solid #e6d27a; padding: 10px 12px; border-radius: 6px; margin-bottom: 12px;
+            font-size: 14px;
+        }
+        .toolbar {
+            display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;
+        }
+        .toolbar select, .toolbar button {
+            padding: 8px 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px;
+        }
+        .fn-btn { 
+            background-color: #f7e57a; 
+            border: 1px solid #d4c77d; 
+            color:#333; 
+            cursor:pointer; 
+        }
+        .fn-btn:hover { 
+            background-color:#f0db66; 
+        }
+        .chart-wrap { 
+            background:#fff; 
+            border:1px solid #ddd; 
+            border-radius:8px; 
+            padding:12px; 
+            position: relative;
+            height: 400px;
+        }
+        canvas#chartCanvas {
+            width: 100% !important;
+            height: 100% !important;
+            display: block;
+        }
+        .legend-note { 
+            font-size: 12px; 
+            color:#666; 
+            margin-top:6px; 
+        }
+        .footer { 
+            display:flex; 
+            gap:10px; 
+            flex-wrap:wrap; 
+            margin-top:12px; 
+        }
+        .footer form { 
+            display:inline-block; 
+        }
+        .footer button { 
+            padding:8px 12px; 
+        }

@@ -1,0 +1,183 @@
+
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* 上部に寄せる */
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 900px;
+            max-width: 95%;
+            padding: 25px 30px; /* 少し大きめのパディング */
+            background-color: #ffe0e6; /* ピンク色 */
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        h1 {
+            font-size: 26px;
+            color: #333;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ffb3c1;
+            text-align: left; /* タイトル中央寄せ */
+        }
+
+        .form-section {
+            display: grid;
+            grid-template-columns: auto 1fr; /* ラベルと入力フィールド */
+            gap: 15px 20px; /* 行と列の隙間 */
+            margin-bottom: 30px;
+            align-items: center;
+        }
+
+        .form-section label {
+            font-weight: bold;
+            color: #555;
+            text-align: right; /* ラベル右寄せ */
+            white-space: nowrap; /* ラベルが改行されないように */
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap; /* 小さい画面で折り返す */
+        }
+
+        .form-section input[type="date"],
+        .form-section input[type="text"],
+        .form-section select {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+        
+        .form-section input[type="date"] {
+            width: 150px;
+        }
+        .form-section input[type="text"] {
+            width: 200px; /* 商品入力フィールドの幅 */
+        }
+        .form-section select {
+            width: 200px; /* プルダウンの幅 */
+        }
+
+        .button-group {
+            grid-column: 2 / 3; /* 2列目に配置 */
+            display: flex;
+            justify-content: flex-start; /* 左寄せ */
+            margin-top: 10px;
+        }
+
+        .button-group button {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .submit-button {
+            background-color: #f0e68c; /* 集計ボタンの色 */
+            border: 1px solid #d4c77d;
+            color: #333;
+        }
+        .submit-button:hover {
+            background-color: #edd18a;
+        }
+
+        /* 集計結果表示エリア */
+        .result-area {
+            background-color: #fff;
+            border: 1px solid #000; /* 黒い枠線 */
+            padding: 15px;
+            min-height: 200px;
+            max-height: 350px;
+            overflow-y: auto;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .result-table th, .result-table td {
+            border: 1px solid #eee;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .result-table th {
+            background-color: #e6e6e6;
+            font-weight: bold;
+            white-space: nowrap; /* ヘッダーが折り返さないように */
+        }
+        
+        .result-table td {
+            white-space: nowrap; /* 内容が折り返さないように */
+        }
+
+        /* 商品に関するメッセージ */
+        .message {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+            text-align: center;
+        }
+        
+        .no-data {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+        }
+
+        /* フッターボタン */
+        .footer-buttons {
+            display: flex;
+            justify-content: space-between; /* 左右に配置 */
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .cancel-button {
+            padding: 10px 30px;
+            background-color: #a9a9a9; /* 灰色 */
+            border: 1px solid #888;
+            color: #fff;
+        }
+        .cancel-button:hover {
+            background-color: #999;
+        }
+
+        .graph-button-wrapper {
+            display: flex;
+            align-items: center;
+        }
+        .graph-button-wrapper input[type="radio"] {
+            margin-right: 5px;
+        }
+        .graph-button {
+            padding: 8px 20px;
+            background-color: #ffcc00; /* 黄色っぽい色 */
+            border: 1px solid #e0b800;
+            color: #333;
+        }
+        .graph-button:hover {
+            background-color: #e0b800;
+        }
