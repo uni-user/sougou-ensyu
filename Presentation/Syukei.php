@@ -110,7 +110,10 @@ switch ($rankingType) {
     border-radius: 5px;
     min-width: 80px; /* ファンクションキーの幅を揃える */
 }
-/* Fキーのボタンは削除済みのため、関連するCSSも不要 */
+#f12form button:hover {
+    background-color: #e0b800;
+    border-color: #a9a9a9;
+}
 </style>
 </head>
 <body>
@@ -180,7 +183,7 @@ switch ($rankingType) {
 
   <!-- Function Key Button -->
   <div class="footer" id="footerButtons">
-    <form method="get">
+    <form method="get" id="f12form">
       <input type="hidden" name="f" value="12">
       <button type="submit" title="F12: メニュー">F12<br>メニュー</button>
     </form>
