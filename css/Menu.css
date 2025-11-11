@@ -1,0 +1,94 @@
+/* ===== 全体背景 ===== */
+body {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+    background-color: #FFE0E6;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; 
+}
+
+/* ===== トップバー ===== */
+.topbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #FFD1DC;
+    border-bottom: 2px solid #FFB3C1;
+    box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.topbar .user-info {
+    font-weight: bold;
+    color: #333;
+}
+
+.topbar .logout button {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #333;
+    background-color: #F7E6AD;
+    cursor: pointer;
+}
+
+.topbar .logout button:hover {
+    background-color: #EDD18A;
+}
+
+/* ===== メインコンテンツ ===== */
+.menu-container {
+    flex: 1; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* ===== ボタングリッド ===== */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 250px);
+    gap: 80px; 
+    justify-content: center;
+}
+
+/* ===== ボタン ===== */
+.menu-button {
+    padding: 30px 0; 
+    font-size: 25px; 
+    font-weight: bold;
+    color: #333;
+    background-color: #F7E6AD;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-align: center;
+}
+
+/* ホバー時 */
+.menu-button:hover {
+    background-color: #EDD18A;
+}
+
+/* ===== レスポンシブ ===== */
+@media (max-width: 800px) {
+    .menu-grid {
+        grid-template-columns: repeat(2, 180px);
+        gap: 25px;
+    }
+}
+
+@media (max-width: 500px) {
+    .menu-grid {
+        grid-template-columns: 1fr; 
+        gap: 20px;
+    }
+}

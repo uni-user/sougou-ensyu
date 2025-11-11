@@ -1,0 +1,214 @@
+/* ===============================
+   基本設定
+   =============================== */
+body {
+  font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 900px;
+  max-width: 95%;
+  padding: 25px 30px;
+  background-color: #ffe0e6;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 26px;
+  color: #333;
+  margin-bottom: 25px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #ffb3c1;
+  text-align: center;
+}
+
+/* ===============================
+   検索フォーム
+   =============================== */
+/* フォームは2列（ラベル固定幅＋入力可変） */
+form[action="StoreIchiran.php"] .form-section,
+form[action="ProductIchiran.php"] .form-section,
+form[action="UserIchiran.php"] .form-section {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  column-gap: 16px;
+  row-gap: 12px;
+  align-items: center;
+}
+
+/* ラベルは右寄せのまま */
+.form-section label {
+  font-weight: bold;
+  text-align: right;
+  white-space: nowrap;
+  color: #555;
+}
+
+/* 入力欄はフル幅 */
+.form-section input[type="text"],
+.form-section select {
+  width: 60%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.form-section input[name="user_id"],
+.form-section select[name="store_id"]{
+  width: 40%;
+}
+
+.form-section select[name="state"],
+.form-section select[name="is_available"],
+.form-section select[name="role"] {
+  width: 15%;
+}
+
+/* 所属店舗と権限種別を横並びにする */
+.form-section .horizontal-group {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* 間の余白 */
+}
+
+
+/* 検索ボタンを右端に */
+form[action="StoreIchiran.php"] .form-section .search-actions,
+form[action="ProductIchiran.php"] .form-section .search-actions,
+form[action="UserIchiran.php"] .form-section .search-actions {
+  grid-column: 2;
+  justify-self: end;
+  margin-right: 70px; /* 左へずらす量を調整 */
+}
+
+/* 入力とボタンを横並びにするラッパ */
+.form-section .input-with-button {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 検索ボタンのスタイル */
+form[action="StoreIchiran.php"] .form-section .search-actions button[type="submit"],
+form[action="ProductIchiran.php"] .form-section .search-actions button[type="submit"],
+form[action="UserIchiran.php"] .form-section .search-actions button[type="submit"] {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f7e6ad;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+form[action="StoreIchiran.php"] .form-section .search-actions button[type="submit"]:hover,
+form[action="ProductIchiran.php"] .form-section .search-actions button[type="submit"]:hover,
+form[action="UserIchiran.php"] .form-section .search-actions button[type="submit"]:hover {
+  background-color: #edd18a;
+}
+
+/* ===============================
+   結果エリア
+   =============================== */
+.result-area {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  max-height: 350px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.result-table th,
+.result-table td {
+  border: 1px solid #eee;
+  padding: 8px;
+  text-align: center;
+}
+
+.result-table th {
+  background-color: #e6e6e6;
+  font-weight: bold;
+}
+
+.result-table td {
+  white-space: nowrap;
+}
+
+tr.selectable:hover {
+  background-color: #eef;
+  cursor: pointer;
+}
+
+tr.selected {
+  background-color: #cce;
+}
+
+/* ===============================
+   ボタングループ
+   =============================== */
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 250px;
+  margin-top: 10px;
+}
+
+.button-group button {
+  padding: 10px 25px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.button-group button[name="action"][value="new"],
+.button-group button[name="action"][value="edit"] {
+  background-color: #f7e6ad;
+  /* border: 1px solid #d4c18f; */
+  color: #333;
+}
+
+.button-group button[name="action"][value="new"]:hover,
+.button-group button[name="action"][value="edit"]:hover {
+  background-color: #edd18a;
+}
+
+.button-group button[type="button"] {
+  background-color: #a9a9a9;
+  color: #fff;
+  /* border: 1px solid #888; */
+}
+
+.button-group button[type="button"]:hover {
+  background-color: #999;
+}
+
+/* ===============================
+   メッセージ
+   =============================== */
+.no-data {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+}
