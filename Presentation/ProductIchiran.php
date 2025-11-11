@@ -18,11 +18,11 @@ $pk    = 'product_id';
 $biz   = new MasterBusiness($table, $pk);
 
 // 検索フォームの入力
-$productName = trim($_GET['product_name'] ?? '');
-$category   = trim($_GET['category'] ?? '');
-$is_available     = $_GET['is_available'] ?? 'all';
-$page      = max(1, (int)($_GET['page'] ?? 1));
-$size      = 20;
+$productName   = trim($_GET['product_name'] ?? '');
+$category      = trim($_GET['category'] ?? '');
+$is_available  = $_GET['is_available'] ?? 'all';
+$page          = max(1, (int)($_GET['page'] ?? 1));
+$size          = 20;
 
 $is_availables = [
     'all' => '全て',
@@ -33,13 +33,9 @@ $is_availables = [
 // 検索条件
 $conditions = [
     'product_name' => $productName,
-    'category'    => $category,
+    'category'     => $category,
 ];
-
-// is_available が all 以外なら条件に追加
-if ($is_available !== 'all') {
-    $conditions['is_available'] = $is_available;
-}
+if ($is_available !== 'all') $conditions['is_available'] = $is_available;
 
 $likeCols = ['product_id', 'product_name', 'category'];
 $offset   = ($page - 1) * $size;
@@ -66,6 +62,7 @@ $rows  = $biz->searchWithLike($conditions, $likeCols, ['product_id ASC'], $size,
             background-color: #cce;
         }
     </style>
+
     <script>
         let selectedRow = null;
 
@@ -84,6 +81,46 @@ $rows  = $biz->searchWithLike($conditions, $likeCols, ['product_id ASC'], $size,
             }
             return true;
         }
+
+        // 検索フォームをクリア
+        function clearSearchForm() {
+            const form = document.querySelector('form[action="ProductIchiran.php"]');
+            if (!form) return;
+            form.querySelectorAll('input[type="text"], input[type="date"], select').forEach(el => el.value = '');
+        }
+
+        // ファンクションキー処理
+        document.addEventListener('keydown', function(e) {
+            if (e.isComposing) return;
+
+            switch (e.key) {
+                case 'F1': // 新規登録
+                    e.preventDefault();
+                    document.querySelector('button[name="action"][value="new"]').click();
+                    break;
+
+                case 'F2': // 検索
+                    e.preventDefault();
+                    document.querySelector('form[action="ProductIchiran.php"]').submit();
+                    break;
+
+                case 'F3': // 編集
+                    e.preventDefault();
+                    const editBtn = document.querySelector('button[name="action"][value="edit"]');
+                    if (editBtn) editBtn.click();
+                    break;
+
+                case 'F9': // クリア
+                    e.preventDefault();
+                    clearSearchForm();
+                    break;
+
+                case 'F12': // メニューへ
+                    e.preventDefault();
+                    location.href = 'Menu.php';
+                    break;
+            }
+        });
     </script>
 </head>
 
@@ -91,20 +128,18 @@ $rows  = $biz->searchWithLike($conditions, $likeCols, ['product_id ASC'], $size,
     <div class="container">
         <h1>商品一覧</h1>
 
+        <!-- 検索フォーム -->
         <form action="ProductIchiran.php" method="get">
             <div class="form-section">
-
                 <label for="product_name">商品名</label>
                 <input type="text" id="product_name" name="product_name" value="<?= h($productName) ?>">
 
                 <label for="category">カテゴリ</label>
                 <div class="input-with-button">
                     <input type="text" id="category" name="category" value="<?= h($category) ?>">
-
                     <div class="search-actions">
-                        <button type="submit">検索</button>
+                        <button type="submit">F2<br>検索</button>
                     </div>
-
                 </div>
 
                 <label for="is_available">取扱状態</label>
@@ -113,10 +148,10 @@ $rows  = $biz->searchWithLike($conditions, $likeCols, ['product_id ASC'], $size,
                         <option value="<?= h($key) ?>" <?= $is_available === $key ? 'selected' : '' ?>><?= h($name) ?></option>
                     <?php endforeach; ?>
                 </select>
-
             </div>
         </form>
 
+        <!-- 一覧＆操作ボタン -->
         <form action="ProductMaster.php" method="get">
             <input type="hidden" id="selectedProductId" name="product_id" value="">
             <div class="result-area">
@@ -148,11 +183,12 @@ $rows  = $biz->searchWithLike($conditions, $likeCols, ['product_id ASC'], $size,
                     <p>全 <?= h($total) ?> 件</p>
                 <?php endif; ?>
             </div>
-        <div class="button-group">
-            <button type="button" onclick="location.href='Menu.php'">戻る</button>
-            <button type="submit" name="action" value="new" onclick="document.getElementById('selectedProductId').value=''">新規登録</button>
-            <button type="submit" name="action" value="edit" onclick="return checkSelection()">編集</button>
-        </div>
+
+            <div class="button-group">
+                <button type="button" onclick="location.href='Menu.php'">F12<br>戻る</button>
+                <button type="submit" name="action" value="new" onclick="document.getElementById('selectedProductId').value=''">F1<br>新規登録</button>
+                <button type="submit" name="action" value="edit" onclick="return checkSelection()">F3<br>編集</button>
+            </div>
         </form>
     </div>
 </body>

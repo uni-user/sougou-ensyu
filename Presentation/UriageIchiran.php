@@ -49,6 +49,38 @@ $paymentMethods = ['現金', 'クレジット', 'QRコード'];
     <meta charset="UTF-8">
     <title>売上一覧</title>
     <link rel="stylesheet" href="../css/UriageIchiran.css">
+
+    <script>
+        // 検索フォームをクリア
+        function clearSearchForm() {
+            const form = document.querySelector('form[action="UriageIchiran.php"]');
+            if (!form) return;
+            form.querySelectorAll('input[type="text"], input[type="date"], select').forEach(el => el.value = '');
+            form.submit(); // クリア後に全件表示
+        }
+
+        // ファンクションキー操作
+        document.addEventListener('keydown', function(e) {
+            if (e.isComposing) return;
+
+            switch (e.key) {
+                case 'F2': // 検索
+                    e.preventDefault();
+                    document.querySelector('form[action="UriageIchiran.php"]').submit();
+                    break;
+
+                case 'F9': // クリア
+                    e.preventDefault();
+                    clearSearchForm();
+                    break;
+
+                case 'F12': // メニューへ戻る
+                    e.preventDefault();
+                    location.href = 'Menu.php';
+                    break;
+            }
+        });
+    </script>
 </head>
 
 <body>
@@ -94,7 +126,7 @@ $paymentMethods = ['現金', 'クレジット', 'QRコード'];
 
                 <!-- 検索ボタン -->
                 <div class="search-actions">
-                    <button type="submit">検索</button>
+                    <button type="submit">F2<br>検索</button>
                 </div>
             </div>
         </form>
@@ -134,9 +166,8 @@ $paymentMethods = ['現金', 'クレジット', 'QRコード'];
         </div>
 
         <div class="button-group">
-            <button type="button" onclick="location.href='Menu.php'">戻る</button>
+            <button type="button" onclick="location.href='Menu.php'">F12<br>戻る</button>
         </div>
     </div>
 </body>
-
 </html>

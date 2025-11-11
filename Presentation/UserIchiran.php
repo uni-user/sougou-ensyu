@@ -42,16 +42,12 @@ $conditions = [
     'user_name' => $userName,
     'store_id'  => $storeId,
 ];
-
-// role が all 以外なら条件に追加
-if ($role !== 'all') {
-    $conditions['role'] = $role;
-}
+if ($role !== 'all') $conditions['role'] = $role;
 
 $likeCols = ['user_id', 'user_name'];
 $offset   = ($page - 1) * $size;
 
-// 件数と検索結果を取得
+// 検索実行
 $total = $biz->countByConditions($conditions, $likeCols);
 $rows  = $biz->searchWithLike($conditions, $likeCols, ['user_id ASC'], $size, $offset);
 ?>
@@ -64,15 +60,10 @@ $rows  = $biz->searchWithLike($conditions, $likeCols, ['user_id ASC'], $size, $o
     <title>ユーザー一覧</title>
     <link rel="stylesheet" href="../css/MasterIchiran.css">
     <style>
-        tr.selectable:hover {
-            background-color: #eef;
-            cursor: pointer;
-        }
-
-        tr.selected {
-            background-color: #cce;
-        }
+        tr.selectable:hover { background-color: #eef; cursor: pointer; }
+        tr.selected { background-color: #cce; }
     </style>
+
     <script>
         let selectedRow = null;
 
@@ -91,6 +82,46 @@ $rows  = $biz->searchWithLike($conditions, $likeCols, ['user_id ASC'], $size, $o
             }
             return true;
         }
+
+        // 検索フォームをクリア
+        function clearSearchForm() {
+            const form = document.querySelector('form[action="UserIchiran.php"]');
+            if (!form) return;
+            form.querySelectorAll('input[type="text"], select').forEach(el => el.value = '');
+        }
+
+        // ファンクションキー操作
+        document.addEventListener('keydown', function(e) {
+            if (e.isComposing) return;
+
+            switch (e.key) {
+                case 'F1': // 新規登録
+                    e.preventDefault();
+                    document.querySelector('button[name="action"][value="new"]').click();
+                    break;
+
+                case 'F2': // 検索
+                    e.preventDefault();
+                    document.querySelector('form[action="UserIchiran.php"]').submit();
+                    break;
+
+                case 'F3': // 編集
+                    e.preventDefault();
+                    const editBtn = document.querySelector('button[name="action"][value="edit"]');
+                    if (editBtn) editBtn.click();
+                    break;
+
+                case 'F9': // 検索クリア
+                    e.preventDefault();
+                    clearSearchForm();
+                    break;
+
+                case 'F12': // メニューへ
+                    e.preventDefault();
+                    location.href = 'Menu.php';
+                    break;
+            }
+        });
     </script>
 </head>
 
@@ -108,9 +139,8 @@ $rows  = $biz->searchWithLike($conditions, $likeCols, ['user_id ASC'], $size, $o
                 <label for="user_name">ユーザー名</label>
                 <div class="input-with-button">
                     <input type="text" id="user_name" name="user_name" value="<?= h($userName) ?>">
-
                     <div class="search-actions">
-                        <button type="submit">検索</button>
+                        <button type="submit">F2<br>検索</button>
                     </div>
                 </div>
 
@@ -119,8 +149,7 @@ $rows  = $biz->searchWithLike($conditions, $likeCols, ['user_id ASC'], $size, $o
                     <select id="store_id" name="store_id">
                         <option value="">選択してください</option>
                         <?php foreach ($stores as $s): ?>
-                            <option value="<?= h($s['store_id']) ?>"
-                                <?= ($storeId == $s['store_id']) ? 'selected' : '' ?>>
+                            <option value="<?= h($s['store_id']) ?>" <?= ($storeId == $s['store_id']) ? 'selected' : '' ?>>
                                 <?= h($s['store_id']) ?>：<?= h($s['store_name']) ?>
                             </option>
                         <?php endforeach; ?>
@@ -129,13 +158,10 @@ $rows  = $biz->searchWithLike($conditions, $likeCols, ['user_id ASC'], $size, $o
                     <label for="role">権限種別</label>
                     <select id="role" name="role">
                         <?php foreach ($roles as $key => $name): ?>
-                            <option value="<?= h($key) ?>" <?= $role === $key ? 'selected' : '' ?>>
-                                <?= h($name) ?>
-                            </option>
+                            <option value="<?= h($key) ?>" <?= $role === $key ? 'selected' : '' ?>><?= h($name) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-
             </div>
         </form>
 
@@ -193,10 +219,9 @@ $rows  = $biz->searchWithLike($conditions, $likeCols, ['user_id ASC'], $size, $o
             </div>
 
             <div class="button-group">
-                <button type="button" onclick="location.href='Menu.php'">戻る</button>
-                <button type="submit" name="action" value="new"
-                    onclick="document.getElementById('selectedUserId').value=''">新規登録</button>
-                <button type="submit" name="action" value="edit" onclick="return checkSelection()">編集</button>
+                <button type="button" onclick="location.href='Menu.php'">F12<br>戻る</button>
+                <button type="submit" name="action" value="new" onclick="document.getElementById('selectedUserId').value=''">F1<br>新規登録</button>
+                <button type="submit" name="action" value="edit" onclick="return checkSelection()">F3<br>編集</button>
             </div>
         </form>
     </div>
