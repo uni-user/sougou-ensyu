@@ -3,7 +3,7 @@
    =============================== */
 body {
   font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
-  background-color: #f4f8ff;
+  background-color: #f0f0f0;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -14,11 +14,11 @@ body {
 }
 
 .container {
-  width: 1000px;
+  width: 900px;
   max-width: 95%;
   padding: 25px 30px;
-  background-color: #e9f2ff;
-  border: 1px solid #c9d8f2;
+  background-color: #ffe0e6;
+  border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
@@ -28,7 +28,7 @@ h1 {
   color: #333;
   margin-bottom: 25px;
   padding-bottom: 10px;
-  border-bottom: 2px solid #8bb3ff;
+  border-bottom: 2px solid #ffb3c1;
   text-align: center;
 }
 
@@ -43,16 +43,14 @@ form[action="UriageIchiran.php"] .form-section {
   align-items: center;
   justify-content: center;
   width: 80%;
-  margin: 0 auto; 
+  margin: 0 auto;
 }
-
 
 .form-section label {
   font-weight: bold;
   text-align: right;
   white-space: nowrap;
   color: #555;
-  margin-left: 80px;
 }
 
 .form-section input[type="text"],
@@ -64,13 +62,14 @@ form[action="UriageIchiran.php"] .form-section {
   border-radius: 5px;
   font-size: 15px;
   box-sizing: border-box;
+  background-color: #fffafc;
 }
 
 /* ===============================
-   売上一覧専用：期間入力（開始～終了）
+   期間入力（開始～終了）
    =============================== */
 .form-section .horizontal-group input[type="date"] {
-  width: 35%;
+  width: 34%;
 }
 
 .form-section .horizontal-group span {
@@ -81,41 +80,27 @@ form[action="UriageIchiran.php"] .form-section {
   font-weight: bold;
 }
 
-/* 検索ボタン位置調整 */
+/* ===============================
+   検索ボタン
+   =============================== */
 form[action="UriageIchiran.php"] .form-section .search-actions {
-  grid-column: 2;
+  grid-column: 1 / -1;
   justify-self: center;
-  margin-right: 70px;
 }
-
-.form-section .input-with-button {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 12px;
-}
-
-/* 検索ボタン */
-form[action="UriageIchiran.php"] .form-section .search-actions {
-  grid-column: 1 / -1;  
-  justify-self: center;  
-  margin-right: 0;
-}
-
 
 form[action="UriageIchiran.php"] .form-section .search-actions button[type="submit"] {
   padding: 10px 25px;
   border: none;
   border-radius: 5px;
-  background-color: #b9d3ff;
+  background-color: #f7e6ad; /* 淡いベージュ */
   cursor: pointer;
   font-size: 16px;
+  transition: background-color 0.2s ease;
 }
 
 form[action="UriageIchiran.php"] .form-section .search-actions button[type="submit"]:hover {
-  background-color: #9bbfff;
+  background-color: #edd18a;
 }
-
 
 /* ===============================
    結果エリア
@@ -145,7 +130,7 @@ form[action="UriageIchiran.php"] .form-section .search-actions button[type="subm
 }
 
 .result-table th {
-  background-color: #e2e9f7;
+  background-color: #f9dce3;
   font-weight: bold;
   position: sticky;
   top: 0;
@@ -163,12 +148,12 @@ form[action="UriageIchiran.php"] .form-section .search-actions button[type="subm
 
 /* 行ホバー効果 */
 tr.selectable:hover {
-  background-color: #eef;
+  background-color: #fff0f5;
   cursor: pointer;
 }
 
 tr.selected {
-  background-color: #cce;
+  background-color: #ffd6dc;
 }
 
 /* ===============================
@@ -189,6 +174,19 @@ tr.selected {
   font-size: 16px;
 }
 
+/* 追加・編集系ボタン */
+.button-group button[name="action"][value="new"],
+.button-group button[name="action"][value="edit"] {
+  background-color: #f7e6ad;
+  color: #333;
+}
+
+.button-group button[name="action"][value="new"]:hover,
+.button-group button[name="action"][value="edit"]:hover {
+  background-color: #edd18a;
+}
+
+/* 閉じる・戻るなどのボタン */
 .button-group button[type="button"] {
   background-color: #a9a9a9;
   color: #fff;
@@ -206,6 +204,3 @@ tr.selected {
   padding: 20px;
   color: #777;
 }
-
-
-
