@@ -25,12 +25,13 @@ body {
 
 .topbar .user-info {
     font-weight: bold;
+    font-size: 18px;
     color: #333;
 }
 
 .topbar .logout button {
     padding: 8px 12px;
-    font-size: 14px;
+    font-size: 18px;
     border-radius: 6px;
     border: 1px solid #333;
     background-color: #F7E6AD;
