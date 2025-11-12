@@ -8,7 +8,10 @@ if (!isset($_SESSION['user'])) {
 
 require_once __DIR__ . '/../Business/MasterBusiness.php';
 
-function h($v) { return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
+function h($v)
+{
+    return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8');
+}
 
 $table = 'products';
 $pk = 'product_id';
@@ -93,68 +96,110 @@ if (isset($_POST['delete']) && $productId !== '') {
 ?>
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>商品マスタ登録・編集</title>
-<link rel="stylesheet" href="../css/Master.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品マスタ登録・編集</title>
+    <link rel="stylesheet" href="../css/Master.css">
+
+    <script>
+        // 入力フォームをクリア
+        function clearSearchForm() {
+            const form = document.querySelector('form[action="ProductMaster.php"]');
+            if (!form) return;
+            form.querySelectorAll('input[type="text"]').forEach(el => el.value = '');
+            form.submit(); // クリア後に全件表示
+        }
+
+        // ファンクションキー操作
+        document.addEventListener('keydown', function(e) {
+            if (e.isComposing) return;
+
+            switch (e.key) {
+                case 'F1': // 保存
+                    e.preventDefault();
+                    document.querySelector('form[action="ProductMaster.php"]').submit();
+                    break;
+
+                case 'F3': // 削除
+                    e.preventDefault();
+                    const delBtn = document.querySelector('button[name="delete"]');
+                    if (delBtn) delBtn.click();
+                    break;
+
+
+                case 'F9': // クリア
+                    e.preventDefault();
+                    clearSearchForm();
+                    break;
+
+                case 'F12': // 一覧画面へ戻る
+                    e.preventDefault();
+                    location.href = 'ProductIchiran.php';
+                    break;
+            }
+        });
+    </script>
 </head>
+
 <body>
-<div class="container">
-    <h1>商品マスタ登録・編集</h1>
+    <div class="container">
+        <h1>商品マスタ登録・編集</h1>
 
-    <?php if ($errorMsg): ?>
-        <p class="error-msg"><?= h($errorMsg) ?></p>
-    <?php endif; ?>
+        <?php if ($errorMsg): ?>
+            <p class="error-msg"><?= h($errorMsg) ?></p>
+        <?php endif; ?>
 
-    <?php
-    $searchParamsNoId = $searchParams;
-    unset($searchParamsNoId['product_id']);
-    ?>
+        <?php
+        $searchParamsNoId = $searchParams;
+        unset($searchParamsNoId['product_id']);
+        ?>
 
-    <form method="post" action="">
-        <div class="form-section">
-            <!-- 商品IDは非表示 -->
-            <?php if ($productId !== ''): ?>
-                <input type="hidden" name="product_id" value="<?= h($productId) ?>">
-            <?php endif; ?>
-
-            <label for="product_name">商品名</label>
-            <div class="input-group">
-                <input type="text" id="product_name" name="product_name" value="<?= h($product['product_name']) ?>" required>
-            </div>
-
-            <label for="category">カテゴリ</label>
-            <div class="input-group">
-                <input type="text" id="category" name="category" value="<?= h($product['category']) ?>" required>
-            </div>
-
-            <label for="price">単価
-            </label>
-            <div class="input-group">
-                <input type="text" id="price" name="price" value="<?= h($product['price']) ?>" required>
-            </div>
-
-            <label>取扱状況</label>
-            <div class="input-group">
-                <?php foreach ($is_availables as $key => $label): ?>
-                    <label>
-                        <input type="radio" name="is_available" value="<?= h($key) ?>"
-                            <?= ((string)$product['is_available'] === (string)$key) ? 'checked' : '' ?>>
-                        <?= h($label) ?>
-                    </label>
-                <?php endforeach; ?>
-            </div>
-
-            <div class="button-group">
-                <button type="button" class="cancel-button" onclick="location.href='ProductIchiran.php?<?= http_build_query($searchParamsNoId) ?>'">キャンセル</button>
+        <form method="post" action="ProductMaster.php">
+            <div class="form-section">
+                <!-- 商品IDは非表示 -->
                 <?php if ($productId !== ''): ?>
-                    <button type="submit" name="delete" value="1" class="delete-button" onclick="return confirm('本当に削除しますか？')">削除</button>
+                    <input type="hidden" name="product_id" value="<?= h($productId) ?>">
                 <?php endif; ?>
-                <button type="submit" class="submit-button">保存</button>
+
+                <label for="product_name">商品名</label>
+                <div class="input-group">
+                    <input type="text" id="product_name" name="product_name" value="<?= h($product['product_name']) ?>" required>
+                </div>
+
+                <label for="category">カテゴリ</label>
+                <div class="input-group">
+                    <input type="text" id="category" name="category" value="<?= h($product['category']) ?>" required>
+                </div>
+
+                <label for="price">単価
+                </label>
+                <div class="input-group">
+                    <input type="text" id="price" name="price" value="<?= h($product['price']) ?>" required>
+                </div>
+
+                <label>取扱状況</label>
+                <div class="input-group">
+                    <?php foreach ($is_availables as $key => $label): ?>
+                        <label>
+                            <input type="radio" name="is_available" value="<?= h($key) ?>"
+                                <?= ((string)$product['is_available'] === (string)$key) ? 'checked' : '' ?>>
+                            <?= h($label) ?>
+                        </label>
+                    <?php endforeach; ?>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="cancel-button" onclick="location.href='ProductIchiran.php?<?= http_build_query($searchParamsNoId) ?>'">F12<br>キャンセル</button>
+                    <?php if ($productId !== ''): ?>
+                        <button type="submit" name="delete" value="1" class="delete-button" onclick="return confirm('本当に削除しますか？')">F3<br>削除</button>
+                    <?php endif; ?>
+                    <button type="submit" name="input" class="submit-button">F1<br>保存</button>
+                </div>
             </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
 </body>
+
 </html>
