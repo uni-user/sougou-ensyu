@@ -66,55 +66,6 @@ switch ($rankingType) {
 <meta charset="UTF-8">
 <title><?= htmlspecialchars($title) ?></title>
 <link rel="stylesheet" href="../css/Syukei.css">
-<style>
-/* 新たなボタンのためのスタイル調整 */
-.ranking-type-buttons {
-    margin-bottom: 20px;
-    display: flex;
-    gap: 10px;
-    justify-content: flex-start; /* 左寄せ */
-}
-.ranking-type-buttons button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border: 1px solid #ccc;
-    background-color: #f0f0f0;
-    border-radius: 5px;
-    min-width: 120px; /* ボタンの幅を揃える */
-}
-.ranking-type-buttons button.active {
-    background-color: #007bff; /* アクティブなボタンの背景色 */
-    color: white;              /* アクティブなボタンの文字色 */
-    border-color: #007bff;
-}
-/* 既存の期間検索フォーム関連の要素を非表示 */
-.controls { display: none; }
-#btnSearch { display: none; }
-
-/* フッターボタンのスタイル調整 */
-.footer {
-    display: flex;
-    justify-content: flex-start; /* Fキーボタンを左寄せ */
-    gap: 10px;
-    padding-top: 20px;
-    margin-top: 20px; /* テーブルとの間隔 */
-    border-top: 1px solid #eee; /* 上部に区切り線 */
-}
-.footer button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border: 1px solid #ccc;
-    background-color: #f0f0f0;
-    border-radius: 5px;
-    min-width: 80px; /* ファンクションキーの幅を揃える */
-}
-#f12form button:hover {
-    background-color: #e0b800;
-    border-color: #a9a9a9;
-}
-</style>
 </head>
 <body>
 <div class="container">
