@@ -99,6 +99,46 @@ if (isset($_POST['delete']) && $userId !== '') {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ユーザーマスタ登録・編集</title>
 <link rel="stylesheet" href="../css/Master.css">
+
+    <script>
+        // 入力フォームをクリア
+        function clearSearchForm() {
+            const form = document.querySelector('form[action="StoreMaster.php"]');
+            if (!form) return;
+            form.querySelectorAll('input[type="text"]').forEach(el => el.value = '');
+            form.submit(); // クリア後に全件表示
+        }
+
+        // ファンクションキー操作
+        document.addEventListener('keydown', function(e) {
+            if (e.isComposing) return;
+
+            switch (e.key) {
+                case 'F1': // 保存
+                    e.preventDefault();
+                    document.querySelector('form[action="UserMaster.php"]').submit();
+                    break;
+
+                case 'F3': // 削除
+                    e.preventDefault();
+                    const delBtn = document.querySelector('button[name="delete"]');
+                    if (delBtn) delBtn.click();
+                    break;
+
+
+                case 'F9': // クリア
+                    e.preventDefault();
+                    clearSearchForm();
+                    break;
+
+                case 'F12': // 一覧画面へ戻る
+                    e.preventDefault();
+                    location.href = 'UserIchiran.php';
+                    break;
+            }
+        });
+    </script>
+
 </head>
 <body>
 <div class="container">
@@ -113,7 +153,7 @@ if (isset($_POST['delete']) && $userId !== '') {
     unset($searchParamsNoId['user_id']);
     ?>
 
-    <form method="post" action="">
+    <form method="post" action="UserMaster.php">
         <div class="form-section">
             <?php if ($userId !== ''): ?>
                 <input type="hidden" name="user_id" value="<?= h($userId) ?>">
@@ -150,11 +190,11 @@ if (isset($_POST['delete']) && $userId !== '') {
             </select>
 
             <div class="button-group">
-                <button type="button" class="cancel-button" onclick="location.href='UserIchiran.php?<?= http_build_query($searchParamsNoId) ?>'">キャンセル</button>
+                <button type="button" class="cancel-button" onclick="location.href='UserIchiran.php?<?= http_build_query($searchParamsNoId) ?>'">F12<br>キャンセル</button>
                 <?php if ($userId !== ''): ?>
-                    <button type="submit" name="delete" value="1" class="delete-button" onclick="return confirm('本当に削除しますか？')">削除</button>
+                    <button type="submit" name="delete" value="1" class="delete-button" onclick="return confirm('本当に削除しますか？')">F3<br>削除</button>
                 <?php endif; ?>
-                <button type="submit" class="submit-button">保存</button>
+                <button type="submit" class="submit-button">F1<br>保存</button>
             </div>
         </div>
     </form>
