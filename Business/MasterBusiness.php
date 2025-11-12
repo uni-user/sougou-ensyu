@@ -29,9 +29,50 @@ class MasterBusiness {
     }
 
     // ===== 新規/更新 =====
-    public function insertUpdate(array $data): int {
-        return $this->dao->save($this->table, $this->primaryKey, $data);
+ public function insertUpdate(array $data): int {
+    // カラム情報を取得
+    $columns = $this->dao->getTableSchema($this->table);
+
+    foreach ($data as $col => $val) {
+        if (!isset($columns[$col])) continue;
+
+        $type = $columns[$col]['type'];
+
+        if (!$this->validateType($type, $val)) {
+            throw new Exception("「{$col}」の値「{$val}」は正しい形式ではありません。");
+        }
     }
+
+    return $this->dao->save($this->table, $this->primaryKey, $data);
+}
+
+/**
+ * SQL Server 用の型チェック関数
+ */
+private function validateType(string $type, $value): bool {
+    if ($value === '' || $value === null) return true;
+
+    switch (true) {
+        case preg_match('/int|smallint|tinyint|bigint/', $type):
+            return is_numeric($value);
+
+        case preg_match('/decimal|numeric|money|float|real/', $type):
+            return is_numeric($value);
+
+        case preg_match('/char|text|nchar|nvarchar|varchar/', $type):
+            return is_string($value);
+
+        case preg_match('/date|time|datetime|smalldatetime/', $type):
+            return (bool)strtotime($value);
+
+        case preg_match('/bit/', $type):
+            return in_array($value, [0, 1, '0', '1', true, false], true);
+
+        default:
+            return true;
+    }
+}
+
 
     // ===== 削除 =====
     public function delete(int $id): bool {

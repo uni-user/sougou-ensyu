@@ -148,4 +148,31 @@ class MasterData {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return (int)$row['max_id'];
     }
+
+        // ===== テーブル定義取得（SQL Server用） =====
+    public function getTableSchema(string $table): array
+    {
+        $sql = "
+            SELECT 
+                COLUMN_NAME AS name,
+                DATA_TYPE AS type,
+                IS_NULLABLE AS is_nullable
+            FROM INFORMATION_SCHEMA.COLUMNS
+            WHERE TABLE_NAME = :table
+        ";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':table' => $table]);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $columns = [];
+        foreach ($rows as $row) {
+            $columns[$row['name']] = [
+                'type' => strtolower($row['type']),
+                'null' => ($row['is_nullable'] === 'YES'),
+            ];
+        }
+
+        return $columns;
+    }
+
 }
