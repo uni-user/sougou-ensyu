@@ -143,14 +143,10 @@ switch ($rankingType) {
 
 <!-- Function Key Event -->
 <script>
-// キーボードのファンクションキーとフッタの各ボタンを連動させる
 document.addEventListener('keydown', function(e) {
-  // IME入力中のキーは無視
   if (e.isComposing) return;
-
   const key = e.key;
 
-  
   switch (key) {
     case 'F12':
       e.preventDefault();
