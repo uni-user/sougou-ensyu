@@ -36,7 +36,10 @@ h1 {
    月移動リンク
    =============================== */
 .nav-month {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;     /* ← 前月と翌月の間のスペース */
   margin-bottom: 30px;
 }
 
@@ -45,11 +48,13 @@ h1 {
   text-decoration: none;
   font-size: 18px;
   font-weight: bold;
-  padding: 6px 14px;
+  padding: 6px 20px;
   border-radius: 5px;
   background-color: #fff2f5;
   border: 2px solid #ffccd5;
-  margin: 0 20px;
+  display: inline-block;   /* ← レイアウト崩れ防止 */
+  min-width: 120px;        /* ← ボタン幅を統一 */
+  text-align: center;
 }
 
 .nav-month a:hover {

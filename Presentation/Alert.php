@@ -58,7 +58,7 @@ $next = (clone $dt)->modify('+1 month');
 
     <div class="container">
 
-        <h1><?= htmlspecialchars($year) ?>年<?= htmlspecialchars($month) ?>月の日別売上未入力店舗</h1>
+        <h1><?= htmlspecialchars($year) ?>年<?= htmlspecialchars($month) ?>月の日別売上未入力店舗一覧</h1>
 
         <div class="nav-month">
             <a href="?year=<?= $prev->format('Y') ?>&month=<?= $prev->format('n') ?>">F5<br>← 前月</a>
