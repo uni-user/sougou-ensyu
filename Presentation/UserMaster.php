@@ -6,6 +6,14 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 
+//　権限チェック
+if ($_SESSION['user']['role'] !== 'admin') {
+    // 権限なし
+    http_response_code(403);
+    echo "アクセス権限がありません。";
+    exit;
+}
+
 require_once __DIR__ . '/../Business/MasterBusiness.php';
 
 function h($v) { return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
