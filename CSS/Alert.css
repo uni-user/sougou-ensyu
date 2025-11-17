@@ -1,0 +1,120 @@
+/* ===============================
+   ページ全体
+   =============================== */
+body {
+  font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  width: 1200px;
+  max-width: 95%;
+  background-color: #ffe0e6;
+  padding: 25px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* ===============================
+   タイトル
+   =============================== */
+h1 {
+  font-size: 26px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 25px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #ffb3c1;
+}
+
+/* ===============================
+   月移動リンク
+   =============================== */
+.nav-month {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.nav-month a {
+  color: #555;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 6px 14px;
+  border-radius: 5px;
+  background-color: #fff2f5;
+  border: 1px solid #ffccd5;
+  margin: 0 20px;
+}
+
+.nav-month a:hover {
+  background-color: #ffd8e0;
+}
+
+/* ===============================
+   テーブル
+   =============================== */
+.alert-table {
+  width: 80%;
+  border-collapse: collapse;
+  font-size: 15px;
+  background-color: #fff;
+  margin: 0 auto;
+}
+
+.alert-table th,
+.alert-table td {
+  border: 1px solid #dad9d9;
+  padding: 10px;
+  text-align: center;
+}
+
+.alert-table th {
+  background-color: #e6e6e6;
+  font-weight: bold;
+  text-align: center;
+}
+
+.alert-table tr {
+  border-bottom: 2px solid #a5a3a3;
+}
+
+.alert-table tr:nth-child(even) {
+  background-color: #fff7fa;
+}
+
+/* 未入力店舗がない行 */
+.no-miss {
+  color: #777;
+}
+
+/* ===============================
+   戻るボタン
+   =============================== */
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 250px;
+  margin-top: 10px;
+}
+
+.button-group button {
+  padding: 10px 25px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.button-group button[type="button"] {
+  background-color: #a9a9a9;
+  color: #fff;
+}
+
+.button-group button[type="button"]:hover {
+  background-color: #999;
+}
