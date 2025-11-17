@@ -53,6 +53,7 @@ if ($userId === 0) {
 
     <button class="menu-button" onclick="location.href='UriageIchiran.php'">売上一覧</button>
     <button class="menu-button" onclick="location.href='Syukei.php'">集計</button>
+    <button class="menu-button" onclick="location.href='Alert.php'">未入力店舗一覧</button>
   </div>
 </main>
 
