@@ -23,7 +23,7 @@ $next = (clone $dt)->modify('+1 month');
 
 <head>
     <meta charset="UTF-8">
-    <title>日別未入力店舗</title>
+    <title>未入力店舗一覧</title>
 
     <!-- 統一デザインCSS -->
     <link rel="stylesheet" href="../css/alert.css">
