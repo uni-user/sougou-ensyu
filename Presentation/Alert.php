@@ -34,6 +34,16 @@ $next = (clone $dt)->modify('+1 month');
             if (e.isComposing) return;
 
             switch (e.key) {
+                case 'F5': // 前月
+                    e.preventDefault();
+                    location.href = "?year=<?= $prev->format('Y') ?>&month=<?= $prev->format('n') ?>";
+                    break;
+
+                case 'F6': // 翌月
+                    e.preventDefault();
+                    location.href = "?year=<?= $next->format('Y') ?>&month=<?= $next->format('n') ?>";
+                    break;
+
                 case 'F12': // メニューへ戻る
                     e.preventDefault();
                     location.href = 'Menu.php';
@@ -48,11 +58,11 @@ $next = (clone $dt)->modify('+1 month');
 
     <div class="container">
 
-        <h1><?= htmlspecialchars($year) ?>年<?= htmlspecialchars($month) ?>月の日別未入力店舗</h1>
+        <h1><?= htmlspecialchars($year) ?>年<?= htmlspecialchars($month) ?>月の日別売上未入力店舗</h1>
 
         <div class="nav-month">
-            <a href="?year=<?= $prev->format('Y') ?>&month=<?= $prev->format('n') ?>">← 前月</a>
-            <a href="?year=<?= $next->format('Y') ?>&month=<?= $next->format('n') ?>">翌月 →</a>
+            <a href="?year=<?= $prev->format('Y') ?>&month=<?= $prev->format('n') ?>">F5<br>← 前月</a>
+            <a href="?year=<?= $next->format('Y') ?>&month=<?= $next->format('n') ?>">F6<br>翌月 →</a>
         </div>
 
         <table class="alert-table">
