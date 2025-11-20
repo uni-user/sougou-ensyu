@@ -38,7 +38,7 @@ class AlertData
         $result = [];
 
         // 全店舗取得
-        $stmtStores = $this->pdo->query("SELECT store_id, store_name FROM stores");
+        $stmtStores = $this->pdo->query("SELECT store_id, store_name FROM stores WHERE store_id <> '101'");
         $stores = $stmtStores->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($period as $date) {
