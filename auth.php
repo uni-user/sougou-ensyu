@@ -2,7 +2,7 @@
 session_start();
 
 // タイムアウト時間（秒）
-$timeout = 1800; // 30分
+$timeout = 600; // 10分
 
 // ▼ ログインチェック
 if (!isset($_SESSION['user'])) {
