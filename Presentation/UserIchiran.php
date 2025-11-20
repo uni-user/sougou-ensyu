@@ -1,5 +1,5 @@
 <?php
-require_once 'auth.php';
+require_once __DIR__ . '/../auth.php';
 //　権限チェック
 if ($_SESSION['user']['role'] !== 'admin') {
     // 権限なし

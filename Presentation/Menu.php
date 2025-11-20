@@ -1,5 +1,5 @@
 <?php
-require_once 'auth.php';
+require_once __DIR__ . '/../auth.php';
 
 // セッションから情報を取得
 $user = $_SESSION['user'];

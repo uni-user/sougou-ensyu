@@ -1,7 +1,7 @@
 <?php
 // /app/pages/Syukei.php
 declare(strict_types=1);
-require_once 'auth.php';
+require_once __DIR__ . '/../auth.php';
 require_once __DIR__ . '/../DataAccess/SyukeiData.php';
 require_once __DIR__ . '/../Business/SyukeiBusiness.php';
 
