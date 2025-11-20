@@ -73,12 +73,6 @@ private function validateType(string $type, $value): bool {
     }
 }
 
-
-    // ===== 削除 =====
-    public function delete(int $id): bool {
-        return $this->dao->delete($this->table, $this->primaryKey, $id);
-    }
-
     // ===== 最大ID取得 =====
     public function getMaxId(): int {
         return $this->dao->getMaxId($this->table, $this->primaryKey);

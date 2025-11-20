@@ -131,15 +131,6 @@ class MasterData {
         }
     }
 
-    // ===== DELETE =====
-    public function delete(string $table, string $primaryKey, int $id): bool
-    {
-        $sql = "DELETE FROM {$table} WHERE {$primaryKey} = :id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([':id' => $id]);
-        return $stmt->rowCount() > 0;
-    }
-
     // ===== 最大ID取得 =====
     public function getMaxId(string $table, string $primaryKey): int
     {
