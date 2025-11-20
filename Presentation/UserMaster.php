@@ -38,6 +38,7 @@ $user = [
     'password'  => '',
     'store_id'  => '',
     'role'      => 'staff',
+    'account_status' => '1',
 ];
 
 $errorMsg = '';
@@ -47,9 +48,11 @@ $searchParams = [
     'user_name' => trim($_GET['user_name'] ?? ''),
     'store_id'  => trim($_GET['store_id'] ?? ''),
     'role'      => $_GET['role'] ?? 'all',
+    'account_status' => $_GET['account_status'] ?? 'all',
 ];
 
 $roles = ['staff' => '一般', 'manager' => '本部', 'admin' => '管理者'];
+$account_status = ['1' => '有効', '0' => '無効'];
 
 // 編集モードなら既存データを取得
 if ($userId !== '') {
@@ -68,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['delete'])) {
         'password'  => trim($_POST['password'] ?? ''),
         'store_id'  => trim($_POST['store_id'] ?? ''),
         'role'      => $_POST['role'] ?? 'staff',
+        'account_status'      => $_POST['account_status'] ?? '1',
     ];
 
     if ($userId !== '') {
@@ -80,23 +84,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['delete'])) {
         exit;
     } catch (Exception $e) {
         $errorMsg = '保存に失敗しました: ' . $e->getMessage();
-    }
-}
-
-// 削除処理
-if (isset($_POST['delete']) && $userId !== '') {
-    try {
-        if ($biz->delete((int)$userId)) {
-            $queryParams = $searchParams;
-            unset($queryParams['user_id']);
-            $query = http_build_query($queryParams);
-            header("Location: UserIchiran.php?$query");
-            exit;
-        } else {
-            $errorMsg = '削除に失敗しました。';
-        }
-    } catch (Exception $e) {
-        $errorMsg = '削除に失敗しました: ' . $e->getMessage();
     }
 }
 ?>
@@ -126,13 +113,6 @@ if (isset($_POST['delete']) && $userId !== '') {
                     e.preventDefault();
                     document.querySelector('form[action="UserMaster.php"]').submit();
                     break;
-
-                case 'F3': // 削除
-                    e.preventDefault();
-                    const delBtn = document.querySelector('button[name="delete"]');
-                    if (delBtn) delBtn.click();
-                    break;
-
 
                 case 'F9': // クリア
                     e.preventDefault();
@@ -197,11 +177,20 @@ if (isset($_POST['delete']) && $userId !== '') {
                 <?php endforeach; ?>
             </select>
 
+            <label>状態</label>
+            <div class="input-group">
+                <?php foreach ($account_status as $key => $label): ?>
+                    <label>
+                        <input type="radio" name="account_status" value="<?= h($key) ?>"
+                            <?= ((string)$user['account_status'] === (string)$key) ? 'checked' : '' ?>>
+                        <?= h($label) ?>
+                    </label>
+                <?php endforeach; ?>
+            </div>
+
             <div class="button-group">
                 <button type="button" class="cancel-button" onclick="location.href='UserIchiran.php?<?= http_build_query($searchParamsNoId) ?>'">F12<br>キャンセル</button>
-                <?php if ($userId !== ''): ?>
-                    <button type="submit" name="delete" value="1" class="delete-button" onclick="return confirm('本当に削除しますか？')">F3<br>削除</button>
-                <?php endif; ?>
+
                 <button type="submit" class="submit-button">F1<br>保存</button>
             </div>
         </div>
