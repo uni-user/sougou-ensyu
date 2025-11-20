@@ -1,11 +1,5 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['user'])) {
-    header('Location: Login.php');
-    exit;
-}
-
+require_once 'auth.php';
 require_once __DIR__ . '/../Business/MasterBusiness.php';
 
 function h($v)

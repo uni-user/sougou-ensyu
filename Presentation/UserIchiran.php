@@ -1,11 +1,5 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['user'])) {
-    header('Location: Login.php');
-    exit;
-}
-
+require_once 'auth.php';
 //　権限チェック
 if ($_SESSION['user']['role'] !== 'admin') {
     // 権限なし

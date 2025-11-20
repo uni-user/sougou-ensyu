@@ -1,11 +1,5 @@
 <?php
-session_start();
-
-// ログイン済みか確認
-if (!isset($_SESSION['user'])) {
-    header('Location: Login.php');
-    exit;
-}
+require_once 'auth.php';
 
 // セッションから情報を取得
 $user = $_SESSION['user'];
