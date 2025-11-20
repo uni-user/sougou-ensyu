@@ -189,6 +189,7 @@ $rows  = $biz->searchWithLike($conditions, $likeCols, ['user_id ASC'], $size, $o
                                 <th>パスワード</th>
                                 <th>所属店舗</th>
                                 <th>権限種別</th>
+                                <th>状態</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -219,6 +220,7 @@ $rows  = $biz->searchWithLike($conditions, $likeCols, ['user_id ASC'], $size, $o
                                         }
                                         ?>
                                     </td>
+                                    <td><?= $r['account_status'] === '1' ? '有効' : '無効' ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
