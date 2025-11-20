@@ -70,23 +70,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['delete'])) {
         $errorMsg = '保存に失敗しました: ' . $e->getMessage();
     }
 }
-
-// 削除処理
-if (isset($_POST['delete']) && $storeId !== '') {
-    try {
-        if ($biz->delete((int)$storeId)) {
-            $queryParams = $searchParams;
-            unset($queryParams['store_id']);
-            $query = http_build_query($queryParams);
-            header("Location: StoreIchiran.php?$query");
-            exit;
-        } else {
-            $errorMsg = '削除に失敗しました。';
-        }
-    } catch (Exception $e) {
-        $errorMsg = '削除に失敗しました: ' . $e->getMessage();
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -114,13 +97,6 @@ if (isset($_POST['delete']) && $storeId !== '') {
                     e.preventDefault();
                     document.querySelector('form[action="StoreMaster.php"]').submit();
                     break;
-
-                case 'F3': // 削除
-                    e.preventDefault();
-                    const delBtn = document.querySelector('button[name="delete"]');
-                    if (delBtn) delBtn.click();
-                    break;
-
 
                 case 'F9': // クリア
                     e.preventDefault();
@@ -179,9 +155,7 @@ if (isset($_POST['delete']) && $storeId !== '') {
 
             <div class="button-group">
                 <button type="button" class="cancel-button" onclick="location.href='StoreIchiran.php?<?= http_build_query($searchParamsNoId) ?>'">F12<br>キャンセル</button>
-                <?php if ($storeId !== ''): ?>
-                    <button type="submit" name="delete" value="1" class="delete-button" onclick="return confirm('本当に削除しますか？')">F3<br>削除</button>
-                <?php endif; ?>
+
                 <button type="submit" class="submit-button">F1<br>保存</button>
             </div>
         </div>
