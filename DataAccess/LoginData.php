@@ -43,25 +43,23 @@ class LoginData
      */
     public function authenticate(string $userId, string $password): ?array
     {
-        $sql = "SELECT * FROM users WHERE user_id = :user_id AND password = :password";
+        $sql = "
+        SELECT 
+            u.*,
+            s.state AS store_state,
+            s.store_name
+        FROM users u
+        LEFT JOIN stores s ON u.store_id = s.store_id
+        WHERE u.user_id = :user_id
+          AND u.password = :password
+    ";
+
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':user_id', $userId, PDO::PARAM_STR);
         $stmt->bindValue(':password', $password, PDO::PARAM_STR);
         $stmt->execute();
+
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
         return $user ?: null;
-    }
-
-    /**
-     * （オプション）パスワードを変更する
-     */
-    public function updatePassword(string $userId, string $newPassword): bool
-    {
-        $sql = "UPDATE users SET password = :password WHERE user_id = :user_id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(':user_id', $userId, PDO::PARAM_STR);
-        $stmt->bindValue(':password', $newPassword, PDO::PARAM_STR);
-        return $stmt->execute();
     }
 }

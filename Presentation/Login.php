@@ -19,6 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif ($user['role'] === 'staff') {
             // 権限チェック：staffはログイン不可
             $error = "このアカウントではログインできません。";
+        } elseif ($user['account_status'] === '0') {
+            // 権限チェック：無効化されたユーザーはログイン不可
+            $error = "このアカウントは無効化されています。";
+        } elseif ($user['store_state'] === '0') {
+            // 無効化された店舗に所属しているユーザーはログイン不可
+            $error = "このアカウントが所属する店舗は現在無効化されています。";
         } else {
             // ログイン成功
             $_SESSION['user'] = $user;
@@ -49,9 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1>ログイン</h1>
 
         <form method="post" class="login-form">
-            <input type="text" name="user_id" placeholder="ユーザーID(半角英数字)" required>
-            <input type="password" name="password" placeholder="パスワード(半角英数字、記号)" required>
-            <button type="submit" class="login-button">ログイン</button>
 
             <?php if ($error): ?>
                 <div class="error-box">
@@ -59,6 +62,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?>
                 </div>
             <?php endif; ?>
+
+            <input type="text" name="user_id" placeholder="ユーザーID(半角英数字)" required>
+            <input type="password" name="password" placeholder="パスワード(半角英数字、記号)" required>
+            <button type="submit" class="login-button">ログイン</button>
+
         </form>
     </div>
 </body>
