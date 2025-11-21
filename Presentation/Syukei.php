@@ -8,21 +8,28 @@ require_once __DIR__ . '/../Business/SyukeiBusiness.php';
 $data = new SyukeiData();
 $biz  = new SyukeiBusiness($data);
 
-// --------------------------------------------------------
-// GETパラメータからランキングタイプを取得。デフォルトは「商品別」
+// GET: ランキングタイプ（デフォルト: product）
 $rankingType = isset($_GET['type']) ? trim($_GET['type']) : 'product';
-// --------------------------------------------------------
 
-// 店舗名のマッピング (Graph.phpやSyukei.phpの$stores配列に相当)
-// DBの sales.store_id に格納されている値と、表示したい店舗名を対応させてください
-$stores = [
-    'honbu'     => '本部',
-    'shinjuku'  => '新宿店',
-    'aomori'    => '青森店',
-    'hokkaido'  => '北海道店',
-    'shizuoka'  => '静岡店',
-    'nagoya'    => '名古屋店',
-];
+// 追加: 期間パラメータ（YYYY-MM-DD）
+$startDate = isset($_GET['start']) ? trim($_GET['start']) : '';
+$endDate   = isset($_GET['end'])   ? trim($_GET['end'])   : '';
+
+// 簡易バリデーション
+$validDate = function($v) {
+    if ($v === '') return false;
+    $d = DateTime::createFromFormat('Y-m-d', $v);
+    return $d && $d->format('Y-m-d') === $v;
+};
+if ($startDate !== '' && !$validDate($startDate)) $startDate = '';
+if ($endDate   !== '' && !$validDate($endDate))   $endDate   = '';
+if ($startDate !== '' && $endDate !== '') {
+    $sd = new DateTime($startDate);
+    $ed = new DateTime($endDate);
+    if ($sd > $ed) {
+        [$startDate, $endDate] = [$endDate, $startDate];
+    }
+}
 
 $errors = [];
 $rows   = [];
@@ -31,34 +38,40 @@ $title  = '売上集計';
 // Fキー処理
 $f = isset($_GET['f']) ? $_GET['f'] : '';
 switch ($f) {
-    case '1': header('Location: Register.php'); exit;         // 登録
-    case '3': header('Location: Delete.php'); exit;           // 削除
-    case '12': header('Location: Menu.php'); exit;            // メニューへ
+    case '1': header('Location: Register.php'); exit;
+    case '3': header('Location: Delete.php'); exit;
+    case '12': header('Location: Menu.php'); exit;
     default: break;
 }
 
-// ランキングデータ取得
-$result = $biz->getRanking($rankingType);
+// ランキングデータ取得（期間を引数に追加）
+$result = $biz->getRanking($rankingType, $startDate !== '' ? $startDate : null, $endDate !== '' ? $endDate : null);
 $errors = $result['errors'];
 $rows   = $result['rows'];
-$rankingType = $result['ranking_type']; // Business層でデフォルトに変わった場合を反映
+$rankingType = $result['ranking_type'] ?? $rankingType; // Business側のデフォルト反映
 
-// タイトルを設定
+// タイトル
 switch ($rankingType) {
-    case 'store':
-        $title = '店舗別集計';// 店舗別集計
-        break;
-    case 'product':
-        $title = '商品別集計'; // 店商品別集計
-        break;
-    case 'date':
-        $title = '日付別集計'; // 日付別集計
-        break;
-    default:
-        $title = '商品別集計'; // デフォルト
-        break;
+    case 'store':   $title = '店舗別集計'; break;
+    case 'product': $title = '商品別集計'; break;
+    case 'date':    $title = '日付別集計'; break;
+    default:        $title = '商品別集計'; break;
 }
 
+// 期間クエリの引き回し用
+$queryPeriod = '';
+if ($startDate !== '') $queryPeriod .= '&start=' . rawurlencode($startDate);
+if ($endDate   !== '') $queryPeriod .= '&end='   . rawurlencode($endDate);
+
+// 店舗名マッピング（必要なら Business で名前解決して返しているのでここでは未使用でも可）
+$stores = [
+    'honbu'     => '本部',
+    'shinjuku'  => '[address]',
+    'aomori'    => '[address]',
+    'hokkaido'  => '[address]',
+    'shizuoka'  => '[address]',
+    'nagoya'    => '[address]',
+];
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -69,13 +82,33 @@ switch ($rankingType) {
 </head>
 <body>
 <div class="container">
-  <h2><?= htmlspecialchars($title) ?></h2>
+  <h2>
+    <?= htmlspecialchars($title) ?>
+    <?php if ($startDate !== '' && $endDate !== ''): ?>
+      <small style="font-weight:normal;color:#555;">(<?= htmlspecialchars($startDate) ?> ～ <?= htmlspecialchars($endDate) ?>)</small>
+    <?php endif; ?>
+  </h2>
 
-  <!-- ランキングタイプ選択ボタン -->
+  <!-- 期間指定フォーム -->
+  <div class="period-form">
+    <form method="get" action="">
+      <input type="hidden" name="type" value="<?= htmlspecialchars($rankingType) ?>">
+      <label>集計期間：</label>
+      <input type="date" name="start" value="<?= htmlspecialchars($startDate) ?>">
+      <label>～</label>
+      <input type="date" name="end" value="<?= htmlspecialchars($endDate) ?>">
+      <button type="submit">適用</button>
+      <?php if ($startDate !== '' || $endDate !== ''): ?>
+        <a href="?type=<?= htmlspecialchars($rankingType) ?>" style="margin-left:8px;">期間クリア</a>
+      <?php endif; ?>
+    </form>
+  </div>
+
+  <!-- ランキングタイプ選択ボタン（期間を維持して遷移） -->
   <div class="ranking-type-buttons">
-    <button type="button" class="<?= ($rankingType === 'store') ? 'active' : '' ?>" onclick="location.href='?type=store'">店舗別</button>
-    <button type="button" class="<?= ($rankingType === 'product') ? 'active' : '' ?>" onclick="location.href='?type=product'">商品別</button>
-    <button type="button" class="<?= ($rankingType === 'date') ? 'active' : '' ?>" onclick="location.href='?type=date'">日付別</button>
+    <button type="button" class="<?= ($rankingType === 'store') ? 'active' : '' ?>" onclick="location.href='?type=store<?= $queryPeriod ?>'">店舗別</button>
+    <button type="button" class="<?= ($rankingType === 'product') ? 'active' : '' ?>" onclick="location.href='?type=product<?= $queryPeriod ?>'">商品別</button>
+    <button type="button" class="<?= ($rankingType === 'date') ? 'active' : '' ?>" onclick="location.href='?type=date<?= $queryPeriod ?>'">日付別</button>
   </div>
 
   <?php if ($errors): ?>
@@ -104,19 +137,18 @@ switch ($rankingType) {
       <tbody>
         <?php
         $rank = 1;
-        if (!empty($rows)): // データがある場合のみ表示
+        if (!empty($rows)):
             foreach ($rows as $r):
-                $amt = (float)$r['total_amount'];
+                $amt = (float)($r['total_amount'] ?? 0);
         ?>
           <tr>
             <td><?= $rank ?></td>
             <?php if ($rankingType === 'store'): ?>
-                <!-- store_id を $stores 配列で店舗名に変換 -->
-                <td><?= htmlspecialchars($r['store_name']) ?></td>
+                <td><?= htmlspecialchars($r['store_name'] ?? ($r['store_id'] ?? '')) ?></td>
             <?php elseif ($rankingType === 'product'): ?>
-                <td><?= htmlspecialchars($r['product_name']) ?></td>
+                <td><?= htmlspecialchars($r['product_name'] ?? ($r['product_id'] ?? '')) ?></td>
             <?php elseif ($rankingType === 'date'): ?>
-                <td><?= htmlspecialchars($r['sales_date']) ?></td>
+                <td><?= htmlspecialchars($r['sales_date'] ?? '') ?></td>
             <?php endif; ?>
             <td style="text-align:right;"><?= number_format($amt) ?></td>
           </tr>
@@ -125,14 +157,12 @@ switch ($rankingType) {
             endforeach;
         else:
         ?>
-          <!-- colspan は表示する列数に合わせて変更 (順位 + 項目名 + 売上金額 = 3列) -->
           <tr><td colspan="3" style="text-align:center;color:#666;">データがありません</td></tr>
         <?php endif; ?>
       </tbody>
     </table>
   </div>
 
-  <!-- Function Key Button -->
   <div class="footer" id="footerButtons">
     <form method="get" id="f12form">
       <input type="hidden" name="f" value="12">
@@ -141,19 +171,12 @@ switch ($rankingType) {
   </div>
 </div>
 
-<!-- Function Key Event -->
 <script>
 document.addEventListener('keydown', function(e) {
   if (e.isComposing) return;
-  const key = e.key;
-
-  switch (key) {
-    case 'F12':
-      e.preventDefault();
-      location.href = '?f=12'; // F12押下でf=12を付与してリロード (PHP側でMenu.phpへリダイレクト)
-      break;
-    default:
-      break;
+  if (e.key === 'F12') {
+    e.preventDefault();
+    location.href = '?f=12<?= $queryPeriod ?>&type=<?= htmlspecialchars($rankingType) ?>';
   }
 });
 </script>
