@@ -169,7 +169,9 @@ $rows  = $biz->searchWithLike($conditions, $likeCols, ['product_id ASC'], $size,
                                     <td><?= h($r['product_name']) ?></td>
                                     <td><?= h($r['category']) ?></td>
                                     <td><?= number_format((float)$r['price']) ?>円</td>
-                                    <td><?= $r['is_available'] === '1' ? '取扱中' : '取扱停止' ?></td>
+                                    <td class="<?= $r['is_available'] === '1' ? 'status-available' : 'status-stopped' ?>">
+                                        <?= $r['is_available'] === '1' ? '取扱中' : '取扱停止' ?>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

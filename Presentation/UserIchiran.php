@@ -63,8 +63,14 @@ $rows  = $biz->searchWithLike($conditions, $likeCols, ['user_id ASC'], $size, $o
     <title>ユーザー一覧</title>
     <link rel="stylesheet" href="../css/MasterIchiran.css">
     <style>
-        tr.selectable:hover { background-color: #eef; cursor: pointer; }
-        tr.selected { background-color: #cce; }
+        tr.selectable:hover {
+            background-color: #eef;
+            cursor: pointer;
+        }
+
+        tr.selected {
+            background-color: #cce;
+        }
     </style>
 
     <script>
@@ -207,14 +213,23 @@ $rows  = $biz->searchWithLike($conditions, $likeCols, ['user_id ASC'], $size, $o
                                     <td>
                                         <?php
                                         switch ($r['role']) {
-                                            case 'staff': echo '一般'; break;
-                                            case 'manager': echo '本部'; break;
-                                            case 'admin': echo '管理者'; break;
-                                            default: echo h($r['role']);
+                                            case 'staff':
+                                                echo '一般';
+                                                break;
+                                            case 'manager':
+                                                echo '本部';
+                                                break;
+                                            case 'admin':
+                                                echo '管理者';
+                                                break;
+                                            default:
+                                                echo h($r['role']);
                                         }
                                         ?>
                                     </td>
-                                    <td><?= $r['account_status'] === '1' ? '有効' : '無効' ?></td>
+                                    <td class="<?= $r['account_status'] === '1' ? 'status-available' : 'status-stopped' ?>">
+                                        <?= $r['account_status'] === '1' ? '有効' : '無効' ?>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -231,4 +246,5 @@ $rows  = $biz->searchWithLike($conditions, $likeCols, ['user_id ASC'], $size, $o
         </form>
     </div>
 </body>
+
 </html>

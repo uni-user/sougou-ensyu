@@ -164,6 +164,17 @@ tr.selected {
   background-color: #cce;
 }
 
+.status-available {
+    color: #0a8800;        /* 濃い緑 */
+    font-weight: bold;
+}
+
+.status-stopped {
+    color: #cc0000;        /* 赤 */
+    font-weight: bold;
+}
+
+
 /* ===============================
    ボタングループ
    =============================== */
