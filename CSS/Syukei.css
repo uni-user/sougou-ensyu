@@ -79,9 +79,9 @@ body {
 .period-form {
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   gap: 12px;
-  margin: 12px 0 16px;
+  margin: 12px 0 32px;
   flex-wrap: nowrap;
 }
 
@@ -111,6 +111,7 @@ body {
   border: 1px solid #d4c77d;
   color: #333;
   border-radius: 4px;
+  margin-left: 10px;
   cursor: pointer;
   white-space: nowrap; /* 折り返し防止 */
 }

@@ -1,12 +1,15 @@
 <?php
+
 declare(strict_types=1);
 
 require_once __DIR__ . '/../DataAccess/SyukeiData.php';
 
-class SyukeiBusiness {
+class SyukeiBusiness
+{
     private SyukeiData $data;
 
-    public function __construct(SyukeiData $data) {
+    public function __construct(SyukeiData $data)
+    {
         $this->data = $data;
     }
 
@@ -17,15 +20,16 @@ class SyukeiBusiness {
      * @param ?string     $end         YYYY-MM-DD または null
      * @return array      ['errors'=>array,'rows'=>array,'ranking_type'=>string]
      */
-    public function getRanking(string $rankingType, ?string $start = null, ?string $end = null): array {
+    public function getRanking(string $rankingType, ?string $start = null, ?string $end = null): array
+    {
         $rows = [];
-        $actualRankingType = in_array($rankingType, ['store','product','date'], true) ? $rankingType : 'product';
+        $actualRankingType = in_array($rankingType, ['store', 'product', 'date', 'payment'], true) ? $rankingType : 'product';
         $errors = [];
 
-        // 簡易バリデーション（null は許容、指定時は YYYY-MM-DD）
         $dateRe = '/^\d{4}-\d{2}-\d{2}$/';
         if (($start !== null && !preg_match($dateRe, $start)) ||
-            ($end   !== null && !preg_match($dateRe, $end))) {
+            ($end   !== null && !preg_match($dateRe, $end))
+        ) {
             $errors[] = '期間指定が不正です。';
             $start = $end = null;
         }
@@ -39,6 +43,9 @@ class SyukeiBusiness {
                 break;
             case 'date':
                 $rows = $this->data->fetchDateRanking($start, $end);
+                break;
+            case 'payment':
+                $rows = $this->data->fetchPaymentRanking($start, $end);
                 break;
         }
 
