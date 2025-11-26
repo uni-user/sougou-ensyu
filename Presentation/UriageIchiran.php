@@ -28,6 +28,10 @@ if ($payment !== '')    $conditions['s.payment_method'] = $payment;
 if ($dateFrom !== '')   $conditions['s.date >=']      = $dateFrom;
 if ($dateTo !== '')     $conditions['s.date <=']      = $dateTo;
 
+if ($productName !== '') {
+    $conditions['p.product_name'] = $productName;
+}
+
 $likeCols = ['p.product_name'];
 $total = $biz->countByConditions($conditions, $likeCols);
 $rows  = $biz->searchWithLike($conditions, $likeCols, ['s.date DESC'], $size, $offset);
